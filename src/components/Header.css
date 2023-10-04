@@ -1,0 +1,22 @@
+a {
+  color: rgb(161, 89, 228);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.logo {
+  width: 100%;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content:flex-end;
+  gap: 1rem;
+}

@@ -1,0 +1,45 @@
+button {
+  border: none;
+  border-radius: 0.3rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  color: white;
+  background-color: rgb(161, 89, 228);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+h1 {
+  color: rgb(161, 89, 228);
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+input {
+  border: 0.02rem solid rgb(168, 167, 167);
+  border-radius: 0.3rem;
+  padding: 0.4rem;  
+}
+input::placeholder{
+  color: rgb(161, 89, 228);
+}
+/* Icono visibles o invisibles*/
+.input-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.input-field span {
+  position: absolute;
+  padding-right: 0.5rem;
+  line-height: 1px;
+}
+.login-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
