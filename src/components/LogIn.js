@@ -1,7 +1,3 @@
-//import firebaseConfig from "../config.js";
-//import { Redirect } from "react-router-dom";
-//import { auth } from "../config";
-//import { signInWithEmailAndPassword } from "firebase/auth";
 import appFirebase from "../config";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useContext, useState } from "react";

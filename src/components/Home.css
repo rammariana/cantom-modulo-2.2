@@ -3,3 +3,7 @@
   flex-direction: column;
   align-items: center;
 }
+.form-minutos {
+  display: flex;
+  gap: 0.5rem;
+}
