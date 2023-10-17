@@ -1,0 +1,51 @@
+:root {
+  --color-primario: rgb(208, 196, 219);
+  --color-titulos: rgb(41, 16, 85);
+  --color-lik-login-signup: rgb(62, 126, 247);
+  --color-blur-input: rgb(152, 186, 249);
+  --color-blanco: rgb(235, 223, 245);
+}
+.btn-containers {
+  width: 80%;
+  display: inline-flex;
+  gap: 1rem;
+  margin-top: 4rem;
+}
+.day {
+  margin: 1rem;
+}
+.meeting-container {
+  min-height: 100vh;
+  text-align: center;
+  padding: 2rem;
+  padding-top: 4rem;
+  background-color: rgb(172, 141, 230);
+}
+.meeting-container h5, p {
+  color: var(--color-blanco);
+}
+.schedules {
+  border: thin solid var(--color-blanco);
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+}
+.schedules span {
+  color: var(--color-blanco);
+}
+.selects {
+  display: inline-flex;
+  margin: 1rem 0;
+}
+.selects select {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: none;
+}
+.selects select:focus {
+  outline: none;
+  box-shadow: 0 -1px 5px var(--color-blur-input)inset, 0px -1px 5px var(--color-blur-input);
+}
+.selects span {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}

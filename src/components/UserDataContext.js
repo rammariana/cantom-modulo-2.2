@@ -1,5 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+//import axios from "axios";
+
+export const UserDataContext = React.createContext();
+
+export const UserDataProvider = ({ children }) => {
+  const navigate = useNavigate();
+  let [id, setId] = useState("");
+
+  // Funciones
+
+  const setIdGlobal = async (form, idMeeting) => {
+    const formData = {
+      nombre: form.nombre,
+      duracion: form.duracion,
+      cantidad: form["cantidad"],
+    };
+    setId(idMeeting);
+    navigate(`/meeting/${idMeeting}`, { state: { formData, idMeeting } });
+    console.log(idMeeting);
+  };
+  const data = { setIdGlobal, id };
+  return (
+    <UserDataContext.Provider value={data}>{children}</UserDataContext.Provider>
+  );
+};
+
+/*
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const UserDataContext = React.createContext();
 
@@ -36,7 +65,7 @@ export const UserDataProvider = ({ children }) => {
       const idMeeting = Math.floor(Math.random() * 999999999) + 1;
       //console.log(idMeeting);
       setId(idMeeting);
-      navigate(`/meeting/:${id}`, { state: { formData, id } });
+      navigate(`/meeting/:${idMeeting}`, { state: { formData, id } });
     } else {
       setError("Necesitas completar todos los campos");
       setTimeout(() => {

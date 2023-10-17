@@ -40,13 +40,18 @@ const SignUp = () => {
   }
   return (
     <div className="login-component">
-      <h1>Sign Up</h1>
+      <h1>Crear cuenta</h1>
       <form onSubmit={handleSubmit}>
         {/*<label for="email">Email</label>*/}
         <input type="email" name="email" placeholder="Email" />
         {/*<label for="password">Password</label>*/}
         <div className="input-field">
-          <input type={input} name="password" placeholder="Password" />
+          <input
+            type={input}
+            name="password"
+            placeholder="Password"
+            className="password"
+          />
           <span onClick={handleVisible}>
             {visible ? (
               <ion-icon name="eye"></ion-icon>
@@ -56,8 +61,10 @@ const SignUp = () => {
           </span>
         </div>
         <span>{error}</span>
-        <button type="submit">Submit</button>
-        <p>Do you have an acount?</p> <Link to="/login">Log In</Link>
+        <button type="submit">Crear cuenta</button>
+        <Link to="/login">
+          <p className="lik-loginSignup">Ya tengo una cuenta</p>
+        </Link>
       </form>
     </div>
   );

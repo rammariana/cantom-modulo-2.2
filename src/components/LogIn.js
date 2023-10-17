@@ -11,56 +11,63 @@ const LogIn = () => {
   let [visible, setVisible] = useState(false);
   let [input, setInput] = useState("password");
   let [error, setError] = useState("");
+const { currentUser } = useContext(AuthContext);
+const handleVisible = () => {
+  setVisible(!visible);
+  setInput(visible ? "password" : "text");
+  console.log(visible);
+};
+//
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const { email, password } = e.target.elements;
 
-  const handleVisible = () => {
-    setVisible(!visible);
-    setInput(visible ? "password" : "text");
-    console.log(visible);
-  };
-  //
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { email, password } = e.target.elements;
-
-    try {
-      await signInWithEmailAndPassword(auth, email.value, password.value);
-      /**
+  try {
+    await signInWithEmailAndPassword(auth, email.value, password.value);
+    /**
        firebaseConfig
         .auth()
         .signInWithEmailAndPassword(email.value, password.value);
       */
-    } catch (err) {
-      setError("Invalid email");
-      setTimeout(() => setError(""), 1500);
-    }
-  };
-  const { currentUser } = useContext(AuthContext);
-  if (currentUser) {
-    return <Navigate to="/dashboard" />;
+  } catch (err) {
+    setError("Invalid email");
+    setTimeout(() => setError(""), 1500);
   }
-  return (
-    <div className="login-component">
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        {/*<label for="email">Email</label>*/}
-        <input type="email" name="email" placeholder="Email" />
-        {/*<label for="password">Password</label>*/}
-        <div className="input-field">
-          <input type={input} name="password" placeholder="Password" />
-          <span onClick={handleVisible}>
-            {visible ? (
-              <ion-icon name="eye"></ion-icon>
-            ) : (
-              <ion-icon name="eye-off"></ion-icon>
-            )}
-          </span>
-        </div>
-        <span>{error}</span>
-        <button type="submit">Submit</button>
-        <p>No registered yet?</p> <Link to="/signup">Sign Up</Link>
-      </form>
-    </div>
-  );
+};
+
+if (currentUser) {
+  return <Navigate to="/dashboard" />;
+}
+return (
+  <div className="login-component">
+    <h1>Log In</h1>
+    <form onSubmit={handleSubmit}>
+      {/*<label for="email">Email</label>*/}
+      <input type="email" name="email" placeholder="Email" />
+      {/*<label for="password">Password</label>*/}
+      <div className="input-field">
+        <input
+          type={input}
+          name="password"
+          placeholder="Password"
+          className="password"
+        />
+        <span onClick={handleVisible}>
+          {visible ? (
+            <ion-icon name="eye"></ion-icon>
+          ) : (
+            <ion-icon name="eye-off"></ion-icon>
+          )}
+        </span>
+      </div>
+      <span>{error}</span>
+      <button type="submit">Iniciar sesión</button>
+      <Link to="/signup">
+        <p className="lik-loginSignup">Aún no tengo cuenta</p>
+      </Link>
+    </form>
+  </div>
+);
 };
 
 export default LogIn;

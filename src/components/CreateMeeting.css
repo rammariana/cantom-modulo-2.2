@@ -1,0 +1,34 @@
+:root {
+  --color-primario: rgb(208, 196, 219);
+  --color-titulos: rgb(41, 16, 85);
+  --color-lik-login-signup: rgb(62, 126, 247);
+   --color-blur-input: rgb(152, 186, 249);
+   --color-blanco: rgb(235, 223, 245);
+}
+
+.createmeeting-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: rgb(172, 141, 230);
+}
+.form-minutos {
+  display: flex;
+  gap: 0.5rem;
+}
+.form-minutos select {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+.form-minutos select:focus {
+  outline: none;
+   box-shadow: 0 -1px 5px var(--color-blur-input)inset, 0px -1px 5px var(--color-blur-input);
+}
+.form-minutos p {
+  color: white;
+}

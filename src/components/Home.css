@@ -1,9 +1,63 @@
+:root {
+  --color-primario: rgb(208, 196, 219);
+  --color-titulos: rgb(41, 16, 85);
+  --color-lik-login-signup: rgb(62, 126, 247);
+   --color-blur-input: rgb(152, 186, 249);
+   --color-blanco: rgb(235, 223, 245);
+}
 .home-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  padding-top: 5rem;
+  background-color: var(--color-primario);
+  /*background-color: rgb(172, 141, 230);*/
+}
+.home-container h1 {
+  color: var(--color-blanco);
+}
+.home-container h3 {
+  color: var(--color-titulos);
+  font-weight:normal;
 }
 .form-minutos {
   display: flex;
   gap: 0.5rem;
+}
+.token-container {
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: var(--color-blanco);
+}
+.token-container h3 {
+  font-weight:bold;
+}
+.token-container h3, .token-container input, .token-container p {
+  margin-bottom: 1rem;
+}
+.token-container input {
+  padding: 1rem;
+  border: none;
+  border-radius: 0.6rem;
+}
+.token-container input:focus {
+  outline: none;
+  box-shadow: 0 -1px 5px var(--color-blur-input)inset, 0px -1px 5px var(--color-blur-input);
+}
+.token-container input::placeholder {
+  text-align: center;
+  font-size: 1rem;
+  color: rgb(143, 158, 173);
+}
+
+@media screen and (min-width: 600px) {
+  .token-container {
+    max-width: 60%;
+  }
 }

@@ -1,3 +1,32 @@
+import "./Home.css";
+import { Link } from "react-router-dom";
+//import CreateMeeting from "../CreateMeeting";
+
+const Home = () => {
+  return (
+    <div className="home-container">
+      <h1>Coordina reuniones sin esfuerzo</h1>
+      <h3>
+        Encuentra horarios convenientes para todos con nuestra herramienta de
+        programación
+      </h3>
+      <div className="token-container">
+        <h3>¿Te invitaron al evento?</h3>
+        <input type="text" placeholder="Ingresa el código aquí" />
+        <p>Unirme al evento</p>
+        {/* Aqui debe ir una redireccion a la url del evento*/}
+      </div>
+      <Link to="/create-meeting">
+        <button>Crear nuevo evento</button>
+      </Link>
+      {/* Aqui debe ir una redireccion a la pag crear evento*/}
+    </div>
+  );
+};
+
+export default Home;
+
+/*
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
@@ -52,7 +81,7 @@ const Home = () => {
       ) : (
         <p>
           <Link to="/login">Log In</Link>
-          {/*  or <Link to="/signup">Sign Up</Link>*/}
+          
         </p>
       )}
     </div>
@@ -60,3 +89,4 @@ const Home = () => {
 };
 
 export default Home;
+*/

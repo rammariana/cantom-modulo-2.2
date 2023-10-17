@@ -1,9 +1,17 @@
+:root {
+  --color-primario: rgb(208, 196, 219);
+  --color-titulos: rgb(41, 16, 85);
+  --color-lik-login-signup: rgb(62, 126, 247);
+   --color-blur-input: rgb(152, 186, 249);
+}
+
 button {
   border: none;
   border-radius: 0.3rem;
-  width: 100%;
-  padding: 0.5rem 0;
+  width: 80%;
+  padding: 1rem 0;
   color: white;
+  font-size: 1rem;
   background-color: rgb(161, 89, 228);
 }
 form {
@@ -12,22 +20,32 @@ form {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  width: 100%;
+}
+form input {
+  width: 80%;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 1rem;
+  border-radius: 0.6rem;
+}
+form input:focus {
+  outline: none;
+  box-shadow: 1px 1px 1px var(--color-primario);
+   box-shadow: 0 -1px 5px var(--color-blur-input)inset, 0px -1px 5px var(--color-blur-input);
 }
 h1 {
-  color: rgb(161, 89, 228);
+  color: var(--color-titulos);
   margin-bottom: 2rem;
   margin-top: 2rem;
 }
-input {
-  border: 0.02rem solid rgb(168, 167, 167);
-  border-radius: 0.3rem;
-  padding: 0.4rem;  
-}
 input::placeholder{
-  color: rgb(161, 89, 228);
+  font-size: 1rem;
+  color: rgb(143, 158, 173);
 }
 /* Icono visibles o invisibles*/
 .input-field {
+  width: 80%;
   position: relative;
   display: flex;
   align-items: center;
@@ -42,4 +60,15 @@ input::placeholder{
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--color-primario);
+  min-height: 100vh;
+}
+.login-component h1{
+  margin-top: 5rem;
+}
+.lik-loginSignup {
+  color: var(--color-lik-login-signup);
+}
+.password{
+  width: 100%;
 }

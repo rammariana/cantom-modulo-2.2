@@ -1,13 +1,17 @@
 a {
-  color: rgb(161, 89, 228);
+  color: rgb(235, 223, 245);
   text-decoration: none;
 }
 .nav-links {
+  width: 100%;
+  position: absolute;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   padding-left: 2rem;
   padding-right: 2rem;
+  padding-top: 0.5rem;
+  background-color: transparent;
 }
 .logo {
   width: 100%;
