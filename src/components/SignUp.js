@@ -42,9 +42,9 @@ const SignUp = () => {
     <div className="login-component">
       <h1>Crear cuenta</h1>
       <form onSubmit={handleSubmit}>
-        {/*<label for="email">Email</label>*/}
+        <label for="email">Correo electrónico</label>
         <input type="email" name="email" placeholder="Email" />
-        {/*<label for="password">Password</label>*/}
+        <label for="password">Contraseña</label>
         <div className="input-field">
           <input
             type={input}
@@ -60,11 +60,15 @@ const SignUp = () => {
             )}
           </span>
         </div>
+        <p className="terminos-condiciones">
+          Al crear una cuenta con nosotros estas aceptando los
+          <Link> Terminos y Condiciones.</Link>
+        </p>
         <span>{error}</span>
         <button type="submit">Crear cuenta</button>
-        <Link to="/login">
-          <p className="lik-loginSignup">Ya tengo una cuenta</p>
-        </Link>
+        <div className="lik-loginSignup">
+          <Link to="/login">Ya tengo una cuenta</Link>
+        </div>
       </form>
     </div>
   );

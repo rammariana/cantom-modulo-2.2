@@ -16,9 +16,9 @@ const Home = () => {
         <p>Unirme al evento</p>
         {/* Aqui debe ir una redireccion a la url del evento*/}
       </div>
-      <Link to="/create-meeting">
-        <button>Crear nuevo evento</button>
-      </Link>
+      <button>
+        <Link to="/create-meeting">Crear nuevo evento</Link>
+      </button>
       {/* Aqui debe ir una redireccion a la pag crear evento*/}
     </div>
   );

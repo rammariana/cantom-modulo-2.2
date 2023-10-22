@@ -1,9 +1,9 @@
 :root {
-  --color-primario: rgb(208, 196, 219);
+  --color-primario-home: rgb(180, 139, 219);
   --color-titulos: rgb(41, 16, 85);
   --color-lik-login-signup: rgb(62, 126, 247);
-   --color-blur-input: rgb(152, 186, 249);
-   --color-blanco: rgb(235, 223, 245);
+  --color-blur-input: rgb(152, 186, 249);
+  --color-blanco: rgb(235, 223, 245);
 }
 .home-container {
   min-height: 100vh;
@@ -14,11 +14,20 @@
   text-align: center;
   padding: 2rem;
   padding-top: 5rem;
-  background-color: var(--color-primario);
-  /*background-color: rgb(172, 141, 230);*/
+  background-color: var(--color-primario-home);
+}
+.home-container button {
+  width: 100%;
+}
+.home-container button a {
+  text-decoration: none;
+  color: var(--color-blanco);
+}
+.home-container h1, .token-container p{
+  color: var(--color-blanco);
 }
 .home-container h1 {
-  color: var(--color-blanco);
+  width: 100%;
 }
 .home-container h3 {
   color: var(--color-titulos);
@@ -27,6 +36,9 @@
 .form-minutos {
   display: flex;
   gap: 0.5rem;
+}
+.token-container p{
+  color: var(--color-blur-input);
 }
 .token-container {
   width: 100%;

@@ -42,9 +42,9 @@ return (
   <div className="login-component">
     <h1>Log In</h1>
     <form onSubmit={handleSubmit}>
-      {/*<label for="email">Email</label>*/}
+      <label htmlFor="email">Correo electrónico</label>
       <input type="email" name="email" placeholder="Email" />
-      {/*<label for="password">Password</label>*/}
+      <label htmlFor="password">Contrseña</label>
       <div className="input-field">
         <input
           type={input}
@@ -60,11 +60,12 @@ return (
           )}
         </span>
       </div>
+      <p>¿Olvidaste tu contraseña?</p>
       <span>{error}</span>
       <button type="submit">Iniciar sesión</button>
-      <Link to="/signup">
-        <p className="lik-loginSignup">Aún no tengo cuenta</p>
-      </Link>
+      <div className="lik-loginSignup">
+        <Link to="/signup">Aún no tengo cuenta</Link>
+      </div>
     </form>
   </div>
 );

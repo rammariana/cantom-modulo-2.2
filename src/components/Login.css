@@ -34,10 +34,15 @@ form input:focus {
   box-shadow: 1px 1px 1px var(--color-primario);
    box-shadow: 0 -1px 5px var(--color-blur-input)inset, 0px -1px 5px var(--color-blur-input);
 }
+form label, form p {
+  text-align: justify;
+  width: 80%;
+  color: var(--color-titulos);
+}
 h1 {
   color: var(--color-titulos);
-  margin-bottom: 2rem;
-  margin-top: 2rem;
+  margin: 2rem;
+  font-size: 1.8rem;
 }
 input::placeholder{
   font-size: 1rem;
@@ -67,8 +72,13 @@ input::placeholder{
   margin-top: 5rem;
 }
 .lik-loginSignup {
-  color: var(--color-lik-login-signup);
+  width: 80%;
+  text-align: center;
 }
+.lik-loginSignup a, .terminos-condiciones a {
+  color: var(--color-lik-login-signup);
+  text-decoration: none;
+} 
 .password{
   width: 100%;
 }

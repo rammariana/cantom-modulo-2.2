@@ -1,11 +1,12 @@
 :root {
   --color-primario: rgb(208, 196, 219);
+  --color-span: rgb(179, 110, 243);
   --color-titulos: rgb(41, 16, 85);
   --color-lik-login-signup: rgb(62, 126, 247);
-   --color-blur-input: rgb(152, 186, 249);
-   --color-blanco: rgb(235, 223, 245);
+  --color-blur-input: rgb(152, 186, 249);
+  --color-blanco: rgb(235, 223, 245);
+  --color-hr: rgb(191, 188, 194);
 }
-
 .createmeeting-container {
   min-height: 100vh;
   display: flex;
@@ -13,22 +14,156 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem;
-  background-color: rgb(172, 141, 230);
+  background-color: var(--color-primario);
 }
-.form-minutos {
+.createmeeting-container h1 {
+  margin-top: 5rem;
+}
+.createMeeting-small {
+  width: 80%;
+}
+.createMeeting-span {
+  border: thin solid var(--color-span);
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-span);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+}
+.column-day {
   display: flex;
-  gap: 0.5rem;
 }
-.form-minutos select {
-  padding: 0.5rem;
+.column-schedule {
+  display: flex;
+  flex-direction: column;
+}
+.column-schedule p {
+  width: auto;
+}
+.column-schedule span {
+  width: 100%;
+  text-align: justify;
+  text-indent: 15%;
+  font-style: italic;
+}
+.checkbox {
+  width: 100%;
+  display: inline-flex;
+}
+.checkbox input {
+  width: 20%;
+}
+.checkbox input:focus {
+  box-shadow: none;
+}
+.div-schedule {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.day{
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.day hr {
+  border: 1.6px solid var(--color-hr);
+}
+.duration-days input {
+  padding: 1.1rem;
+  width: 100%;
+}
+.duration-days input::placeholder, .duration-minutes select, .duration-days input {
+  text-align: center;
+}
+.duration-minutes select {
+  padding: 1rem;
   border: none;
   border-radius: 0.5rem;
 }
-.form-minutos select:focus {
+.duration-minutes select:focus {
   outline: none;
    box-shadow: 0 -1px 5px var(--color-blur-input)inset, 0px -1px 5px var(--color-blur-input);
 }
-.form-minutos p {
-  color: white;
+.duration .duration-days, .duration .duration-minutes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.duration .duration-days label, .duration .duration-minutes label {
+  width: 100%;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+form .duration {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+}
+.icons {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+}
+.icons ion-icon, .trash ion-icon {
+  color: var(--color-titulos);
+}
+.label-container {
+  width: 80%;
+  display: flex;
+  column-gap: 0.3rem;
+}
+.label-container label {
+  width: 100%;
+  text-align: left;
+}
+.schedule {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0.6rem 0;
+}
+.schedule p {
+  margin: 0 0.5rem;
+}
+.schedule select {
+  border: thin solid black;
+  color: black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.schedule select:focus {
+  outline: none;
+}
+.schedules-container {
+  width: 80%;
+}
+.schedules span {
+  color: var(--color-blanco);
+}
+.selects {
+  display: inline-flex;
+  margin: 1rem 0;
+}
+.selects select {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: none;
+}
+.selects select:focus {
+  outline: none;
+  box-shadow: 0 -1px 5px var(--color-blur-input)inset, 0px -1px 5px var(--color-blur-input);
+}
+.selects span {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.trash {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
