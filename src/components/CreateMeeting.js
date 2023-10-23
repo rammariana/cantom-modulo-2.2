@@ -114,7 +114,7 @@ const CreateMeeting = () => {
   });
 
   const [isChecked, setIsChecked] = useState(false);
-
+  /*
   const [scheduleIdCounter, setScheduleIdCounter] = useState(0);
 
   const generateUniqueId = () => {
@@ -122,8 +122,68 @@ const CreateMeeting = () => {
     //console.log(scheduleIdCounter);
     return `schedule-${scheduleIdCounter}`;
   };
-  const schedule = (
-    <div className="schedule" key={scheduleIdCounter} id={scheduleIdCounter}>
+
+   function handleClickRemove(e) {
+    
+     console.log(e.target.closest(".schedule"));
+    const scheduleId = e.target.closest(".schedule").id;
+     const updatedSchedules = schedules.filter(
+       (schedule) => schedule.key !== scheduleId
+     );
+     for (let i = 0; i < schedules.length; i++) {
+       console.log(schedules[i]);
+     }
+
+     setSchedules(updatedSchedules);
+   }
+   const schedule = (
+     <div className="schedule" key={scheduleIdCounter} id={scheduleIdCounter}>
+       <div className="div-schedule">
+         <select name="" id="">
+           {horas.map((e, index) => (
+             <option value="e" key={index}>
+               {e}
+             </option>
+           ))}
+         </select>
+         <p>-</p>
+         <select name="" id="">
+           {horas.map((e, index) => (
+             <option value="e" key={index}>
+               {e}
+             </option>
+           ))}
+         </select>
+       </div>
+       <div className="trash">
+         <ion-icon name="trash" onClick={handleClickRemove}></ion-icon>
+       </div>
+     </div>
+   );
+
+   const [schedules, setSchedules] = useState([schedule]);
+*/
+  function handleClickRemove(e) {
+    console.log(e.target.parentElement.parentElement.parentElement);
+    console.log(arrayHours);
+    const parentElement = e.target.parentElement.parentElement.parentElement;
+    const removedIndex = parseInt(parentElement.getAttribute("id"), 10);
+
+    const newArrayHours = arrayHours.filter(
+      (element, index) => index !== removedIndex
+    );
+
+    setArrayHours(newArrayHours);
+  }
+  const [myIndex, setMyIndex] = useState(0);
+  const [arrayHours, setArrayHours] = useState([]);
+  const handleChecked = (e) => {
+    setIsChecked(!isChecked);
+    setArrayHours([bla]);
+  };
+
+  const bla = (
+    <div key={myIndex} id={myIndex}>
       <div className="div-schedule">
         <select name="" id="">
           {horas.map((e, index) => (
@@ -141,24 +201,21 @@ const CreateMeeting = () => {
           ))}
         </select>
       </div>
+
       <div className="trash">
         <ion-icon name="trash" onClick={handleClickRemove}></ion-icon>
       </div>
     </div>
   );
-
-  const [schedules, setSchedules] = useState([schedule]);
-
   let [error, setError] = useState("");
   const hours = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
-
   const handleClickAdd = () => {
-    const newSchedule = (
-      <div
-        className="schedule"
-        key={generateUniqueId()}
-        id={generateUniqueId()}
-      >
+    const newIndex = myIndex + 1;
+    setMyIndex(newIndex);
+    //console.log(myIndex);
+
+    const newBla = (
+      <div key={newIndex} id={newIndex}>
         <div className="div-schedule">
           <select name="" id="">
             {horas.map((e, index) => (
@@ -182,20 +239,44 @@ const CreateMeeting = () => {
         </div>
       </div>
     );
+    setArrayHours([...arrayHours, newBla]);
+    /*const newSchedule = (
+       <div
+         className="schedule"
+         key={generateUniqueId()}
+         id={generateUniqueId()}
+       >
+         <div className="div-schedule">
+           <select name="" id="">
+             {horas.map((e, index) => (
+               <option value="e" key={index}>
+                 {e}
+               </option>
+             ))}
+           </select>
+           <p>-</p>
+           <select name="" id="">
+             {horas.map((e, index) => (
+               <option value="e" key={index}>
+                 {e}
+               </option>
+             ))}
+           </select>
+         </div>
 
-    setSchedules([...schedules, newSchedule]);
+         <div className="trash">
+           <ion-icon name="trash" onClick={handleClickRemove}></ion-icon>
+         </div>
+       </div>
+     );*/
+    //setSchedules([...schedules, newSchedule]);
     //console.log(schedules);
   };
-  function handleClickRemove(e) {
-    console.log(e);
-    console.log(schedules);
-  }
-  const handleChecked = (e) => {
-    setIsChecked(!isChecked);
-  };
+
   useEffect(() => {
-    console.log(schedules);
-  }, [schedules]);
+    console.log(arrayHours);
+  }, [arrayHours]);
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -323,7 +404,15 @@ const CreateMeeting = () => {
               </div>
             </div>
             <div className="column-schedule">
-              {isChecked ? schedules : <span>No seleccionado</span>}
+              {isChecked ? (
+                arrayHours.map((e, index) => (
+                  <div key={index} id={index}>
+                    {e}
+                  </div>
+                ))
+              ) : (
+                <span>No seleccionado</span>
+              )}
             </div>
           </div>
         </section>
