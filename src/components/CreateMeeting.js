@@ -114,55 +114,7 @@ const CreateMeeting = () => {
   });
 
   const [isChecked, setIsChecked] = useState(false);
-  /*
-  const [scheduleIdCounter, setScheduleIdCounter] = useState(0);
 
-  const generateUniqueId = () => {
-    setScheduleIdCounter(scheduleIdCounter + 1);
-    //console.log(scheduleIdCounter);
-    return `schedule-${scheduleIdCounter}`;
-  };
-
-   function handleClickRemove(e) {
-    
-     console.log(e.target.closest(".schedule"));
-    const scheduleId = e.target.closest(".schedule").id;
-     const updatedSchedules = schedules.filter(
-       (schedule) => schedule.key !== scheduleId
-     );
-     for (let i = 0; i < schedules.length; i++) {
-       console.log(schedules[i]);
-     }
-
-     setSchedules(updatedSchedules);
-   }
-   const schedule = (
-     <div className="schedule" key={scheduleIdCounter} id={scheduleIdCounter}>
-       <div className="div-schedule">
-         <select name="" id="">
-           {horas.map((e, index) => (
-             <option value="e" key={index}>
-               {e}
-             </option>
-           ))}
-         </select>
-         <p>-</p>
-         <select name="" id="">
-           {horas.map((e, index) => (
-             <option value="e" key={index}>
-               {e}
-             </option>
-           ))}
-         </select>
-       </div>
-       <div className="trash">
-         <ion-icon name="trash" onClick={handleClickRemove}></ion-icon>
-       </div>
-     </div>
-   );
-
-   const [schedules, setSchedules] = useState([schedule]);
-*/
   function handleClickRemove(e) {
     console.log(e.target.parentElement.parentElement.parentElement);
     console.log(arrayHours);
@@ -179,7 +131,7 @@ const CreateMeeting = () => {
   const [arrayHours, setArrayHours] = useState([]);
   const handleChecked = (e) => {
     setIsChecked(!isChecked);
-    if (arrayHours) {
+    if (arrayHours.length > 0) {
       setArrayHours([...arrayHours]);
     } else {
       setArrayHours([bla]);
@@ -438,3 +390,7 @@ const CreateMeeting = () => {
   );
 };
 export default CreateMeeting;
+
+
+
+

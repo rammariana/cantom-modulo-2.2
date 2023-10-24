@@ -20,6 +20,7 @@ export const UserDataProvider = ({ children }) => {
     navigate(`/meeting/${idMeeting}`, { state: { formData, idMeeting } });
     console.log(idMeeting);
   };
+
   const data = { setIdGlobal, id };
   return (
     <UserDataContext.Provider value={data}>{children}</UserDataContext.Provider>
