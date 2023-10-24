@@ -179,7 +179,11 @@ const CreateMeeting = () => {
   const [arrayHours, setArrayHours] = useState([]);
   const handleChecked = (e) => {
     setIsChecked(!isChecked);
-    setArrayHours([bla]);
+    if (arrayHours) {
+      setArrayHours([...arrayHours]);
+    } else {
+      setArrayHours([bla]);
+    }
   };
 
   const bla = (

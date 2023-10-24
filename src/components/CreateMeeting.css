@@ -41,6 +41,13 @@
 .column-schedule p {
   width: auto;
 }
+.column-schedule div{
+  width: 100%;
+  display: flex;
+}
+.column-schedule div div {
+  display: flex;
+}
 .column-schedule span {
   width: 100%;
   text-align: justify;
@@ -57,10 +64,12 @@
 .checkbox input:focus {
   box-shadow: none;
 }
-.div-schedule {
+.column-schedule .div-schedule {
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+  align-items: baseline;
+  padding: 0.5rem;
 }
 .day{
   display: flex;
@@ -126,10 +135,10 @@ form .duration {
   justify-content: flex-end;
   margin: 0.6rem 0;
 }
-.schedule p {
+.div-schedule p {
   margin: 0 0.5rem;
 }
-.schedule select {
+.div-schedule select {
   border: thin solid black;
   color: black;
   border-radius: 0.5rem;
@@ -161,7 +170,7 @@ form .duration {
   margin-right: 1rem;
   margin-left: 1rem;
 }
-.trash {
+.column-schedule .trash {
   width: 25%;
   display: flex;
   align-items: center;
