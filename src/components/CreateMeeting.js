@@ -6,7 +6,7 @@ import axios from "axios";
 import "./CreateMeeting.css";
 
 const CreateMeeting = () => {
-  const horas = [
+  /*const horas = [
     "00:00",
     "00:15",
     "00:30",
@@ -103,131 +103,19 @@ const CreateMeeting = () => {
     "23:15",
     "23:30",
     "23:45",
-  ];
+  ];*/
 
   //const { currentUser } = useContext(AuthContext);
-  const { setIdGlobal } = useContext(UserDataContext);
+  const { setIdGlobal, arrayHours, handleClickAdd, handleChecked, isChecked } =
+    useContext(UserDataContext);
   const [form, setForm] = useState({
     nombre: "",
     duracion: "",
     cantidad: 0,
   });
 
-  const [isChecked, setIsChecked] = useState(false);
-
-  function handleClickRemove(e) {
-    console.log(e.target.parentElement.parentElement.parentElement);
-    console.log(arrayHours);
-    const parentElement = e.target.parentElement.parentElement.parentElement;
-    const removedIndex = parseInt(parentElement.getAttribute("id"), 10);
-
-    const newArrayHours = arrayHours.filter(
-      (element, index) => index !== removedIndex
-    );
-
-    setArrayHours(newArrayHours);
-  }
-  const [myIndex, setMyIndex] = useState(0);
-  const [arrayHours, setArrayHours] = useState([]);
-  const handleChecked = (e) => {
-    setIsChecked(!isChecked);
-    if (arrayHours.length > 0) {
-      setArrayHours([...arrayHours]);
-    } else {
-      setArrayHours([bla]);
-    }
-  };
-
-  const bla = (
-    <div key={myIndex} id={myIndex}>
-      <div className="div-schedule">
-        <select name="" id="">
-          {horas.map((e, index) => (
-            <option value="e" key={index}>
-              {e}
-            </option>
-          ))}
-        </select>
-        <p>-</p>
-        <select name="" id="">
-          {horas.map((e, index) => (
-            <option value="e" key={index}>
-              {e}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="trash">
-        <ion-icon name="trash" onClick={handleClickRemove}></ion-icon>
-      </div>
-    </div>
-  );
   let [error, setError] = useState("");
   const hours = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
-  const handleClickAdd = () => {
-    const newIndex = myIndex + 1;
-    setMyIndex(newIndex);
-    //console.log(myIndex);
-
-    const newBla = (
-      <div key={newIndex} id={newIndex}>
-        <div className="div-schedule">
-          <select name="" id="">
-            {horas.map((e, index) => (
-              <option value="e" key={index}>
-                {e}
-              </option>
-            ))}
-          </select>
-          <p>-</p>
-          <select name="" id="">
-            {horas.map((e, index) => (
-              <option value="e" key={index}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="trash">
-          <ion-icon name="trash" onClick={handleClickRemove}></ion-icon>
-        </div>
-      </div>
-    );
-    setArrayHours([...arrayHours, newBla]);
-    /*const newSchedule = (
-       <div
-         className="schedule"
-         key={generateUniqueId()}
-         id={generateUniqueId()}
-       >
-         <div className="div-schedule">
-           <select name="" id="">
-             {horas.map((e, index) => (
-               <option value="e" key={index}>
-                 {e}
-               </option>
-             ))}
-           </select>
-           <p>-</p>
-           <select name="" id="">
-             {horas.map((e, index) => (
-               <option value="e" key={index}>
-                 {e}
-               </option>
-             ))}
-           </select>
-         </div>
-
-         <div className="trash">
-           <ion-icon name="trash" onClick={handleClickRemove}></ion-icon>
-         </div>
-       </div>
-     );*/
-    //setSchedules([...schedules, newSchedule]);
-    //console.log(schedules);
-  };
 
   useEffect(() => {
     console.log(arrayHours);
@@ -390,7 +278,3 @@ const CreateMeeting = () => {
   );
 };
 export default CreateMeeting;
-
-
-
-
