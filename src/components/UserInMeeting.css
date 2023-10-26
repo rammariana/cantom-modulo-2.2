@@ -1,0 +1,120 @@
+:root {
+  --color-primario-home: rgb(180, 139, 219);
+  --color-primario: rgb(208, 196, 219);
+  --color-titulos: rgb(41, 16, 85);
+  --color-dotted: rgb(62, 33, 113);
+  --color-lik-login-signup: rgb(62, 126, 247);
+  --color-blur-input: rgb(152, 186, 249);
+  --color-blanco: rgb(235, 223, 245);
+  --color-span: rgb(179, 110, 243);
+  --color-hr: rgb(191, 188, 194);
+}
+.userInMeeting-container {
+  min-height: 100vh;
+  background-color: var(--color-primario);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: center;*/
+  padding-top: 4rem;
+  text-align: center;
+  border: thin solid red;
+}
+.userInMeeting-container p {
+  color: var(--color-titulos);
+}
+.userInMeeting-container .label-container {
+  margin-top: 2rem;
+}
+.userInMeeting-container .label-container label {
+  width: 100%;
+  text-align: left;
+  color: var(--color-titulos);
+}
+.select-schedules {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  /*gap: 1rem;*/
+}
+.select-schedules small {
+  width: 100%;
+  display: block;
+  text-align: left;
+  margin-top: 1rem;
+}
+.div-available-hours {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+}
+.select-schedules h4 {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-titulos);
+}
+.carousel-control-prev, .carousel-control-next {
+  bottom: 80%;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: var(--color-span);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+.carousel-control-next ion-icon, .carousel-control-prev ion-icon {
+  color: var(--color-titulos);
+}
+.carousel-control-next span, .carousel-control-prev span {
+  border-radius: 50%;
+  background-color: var(--color-blur-input);
+  color: var(--color-titulos);
+}
+.hours .hour {
+  width: 20%;
+  color: var(--color-titulos);
+  /*
+  border-top: thin solid var(--color-titulos);
+  border-bottom: thin solid var(--color-titulos);
+  */
+}
+.div-available-hours .minutes {
+  width: 100%;
+  border-top: thin solid var(--color-titulos);
+}
+.minutes .min {
+  border-bottom: thin dotted var(--color-dotted);
+  height: 0.5rem;
+}
+
+/*slider*/
+.slider-container {
+  border: thin solid red;
+  overflow: hidden;
+
+}
+.select-schedules .slider {
+  border: thin solid red;
+  display: flex;
+}
+.slider .slide {
+ flex: 0 0 100%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.arrows {
+  position: absolute;
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+}
+.next {
+  justify-content: flex-end;
+}

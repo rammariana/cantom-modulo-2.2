@@ -126,6 +126,7 @@ form .duration {
 .label-container {
   width: 80%;
   display: flex;
+  align-items: center;
   column-gap: 0.3rem;
 }
 .label-container label {

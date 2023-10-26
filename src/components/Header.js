@@ -8,6 +8,8 @@ import MeetingId from "./MeetingId";
 import "./Header.css";
 import { UserDataProvider } from "./UserDataContext";
 import CreateMeeting from "./CreateMeeting";
+import JoinMeeting from "./JoinMeeting";
+import UserInMeeting from "./UserInMeeting";
 
 const Header = () => {
   const location = useLocation();
@@ -50,6 +52,24 @@ const Header = () => {
           }
         />
         <Route exact path="/create-meeting" element={<CreateMeeting />} />
+        <Route
+          exact
+          path="/join-meeting"
+          element={
+            <UserDataProvider>
+              <JoinMeeting />
+            </UserDataProvider>
+          }
+        />
+        <Route
+          exact
+          path="/user-in-meeting"
+          element={
+            <UserDataProvider>
+              <UserInMeeting />
+            </UserDataProvider>
+          }
+        />
       </Routes>
     </>
   );

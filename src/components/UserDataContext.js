@@ -7,6 +7,7 @@ export const UserDataContext = React.createContext();
 export const UserDataProvider = ({ children }) => {
   const navigate = useNavigate();
   let [id, setId] = useState("");
+  let [name, setName] = useState("");
   const horas = [
     "00:00",
     "00:15",
@@ -108,6 +109,8 @@ export const UserDataProvider = ({ children }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [myIndex, setMyIndex] = useState(0);
   const [arrayHours, setArrayHours] = useState([]);
+  const [token, setToken] = useState("");
+
   // Funciones
 
   const setIdGlobal = async (form, idMeeting) => {
@@ -119,6 +122,11 @@ export const UserDataProvider = ({ children }) => {
     setId(idMeeting);
     navigate(`/meeting/${idMeeting}`, { state: { formData, idMeeting } });
     console.log(idMeeting);
+  };
+  const setNameGlobal = async (nombre) => {
+    setName(nombre);
+    navigate(`/user-in-meeting`, { state: { nombre } });
+    //console.log(idMeeting);
   };
 
   function handleClickRemove(e) {
@@ -202,17 +210,28 @@ export const UserDataProvider = ({ children }) => {
     setArrayHours([...arrayHours, newBla]);
   };
 
+  const handleChange = (e) => {
+    setToken(e.target.value);
+  };
+
   useEffect(() => {
     console.log(arrayHours);
   }, [arrayHours]);
+  useEffect(() => {
+    console.log(token);
+  }, [token]);
 
   const data = {
     setIdGlobal,
+    setNameGlobal,
+    name,
     id,
     handleChecked,
     handleClickAdd,
     arrayHours,
     isChecked,
+    handleChange,
+    token,
   };
   return (
     <UserDataContext.Provider value={data}>{children}</UserDataContext.Provider>
