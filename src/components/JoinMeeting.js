@@ -24,7 +24,7 @@ const JoinMeeting = () => {
     const userName = nombre.concat(id);
     console.log(userName);
 
-    const res = await axios.post(
+    const res = await axios.put(
       "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-user-in-meeting",
 
       {

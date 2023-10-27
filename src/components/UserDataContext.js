@@ -106,10 +106,13 @@ export const UserDataProvider = ({ children }) => {
     "23:30",
     "23:45",
   ];
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState([]); //dias con check
   const [myIndex, setMyIndex] = useState(0);
   const [arrayHours, setArrayHours] = useState([]);
   const [token, setToken] = useState("");
+
+  //este estado almacena todos los cambios del form para crear una nueva meeting
+  const [formGlobal, setFormGlobal] = useState({});
 
   // Funciones
 
@@ -123,12 +126,20 @@ export const UserDataProvider = ({ children }) => {
     navigate(`/meeting/${idMeeting}`, { state: { formData, idMeeting } });
     console.log(idMeeting);
   };
+
   const setNameGlobal = async (nombre) => {
     setName(nombre);
     navigate(`/user-in-meeting`, { state: { nombre } });
     //console.log(idMeeting);
   };
 
+  //AGREGUE ESTA FUNCION -------------------------
+  const setFormG = async (form) => {
+    setFormGlobal(form)
+  }
+  //------------
+
+  /*
   function handleClickRemove(e) {
     console.log(e.target.parentElement.parentElement.parentElement);
     console.log(arrayHours);
@@ -208,7 +219,7 @@ export const UserDataProvider = ({ children }) => {
       </div>
     );
     setArrayHours([...arrayHours, newBla]);
-  };
+  };*/
 
   const handleChange = (e) => {
     setToken(e.target.value);
@@ -226,12 +237,14 @@ export const UserDataProvider = ({ children }) => {
     setNameGlobal,
     name,
     id,
-    handleChecked,
-    handleClickAdd,
     arrayHours,
     isChecked,
     handleChange,
     token,
+
+    //AGREGUE ESTOS EXPORTS ------------------
+    formGlobal,
+    setFormG,
   };
   return (
     <UserDataContext.Provider value={data}>{children}</UserDataContext.Provider>
