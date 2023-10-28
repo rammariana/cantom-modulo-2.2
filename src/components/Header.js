@@ -73,7 +73,7 @@ const Header = () => {
         />
         <Route
           exact
-          path="/meeting-final"
+          path="/meeting-final/:meetingId"
           element={
             <UserDataProvider>
               <MeetingFinal />

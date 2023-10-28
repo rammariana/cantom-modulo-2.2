@@ -49,6 +49,112 @@ import "./MeetingFinal.css"
   );
 }; */}
 
+const WeekTable = () => {
+  const [slots, setSlots] = useState(weekLapsesGlobalArray);
+  const [form, setForm] = useState({});
+
+  const params = useParams();
+  const meetingId = params.meetingId;
+  //console.log(params, id);
+  useEffect(() => {
+    async function fechData() {
+      try {
+        const res = await axios.get(
+          `https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/get-meeting-info/${meetingId}`
+        );
+        setForm(res.data);
+        setSlots(res.data.weeklyTable)
+        console.log(res.data)
+        //console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fechData();
+  }, [meetingId]);
+
+  // Determine the color based on the count
+  const getColor = (usersAvailable) => {
+    const numberOfUsers = form.users?.length
+
+    if(numberOfUsers == usersAvailable){
+        return `lightGreen`; 
+    }else{
+        let intensity = (255*(usersAvailable/numberOfUsers));
+        if(intensity>255){intensity=255};
+        return `rgb(255, ${255 - intensity}, 255)`;
+    }
+  };
+
+  return (
+    <div className="meeting-final-container">
+
+        <h1>{form.eventName || 'Evento ' + form.meetingId}</h1>
+        <h2>Encuentra cuando pueden asistir todos los invitados a tu evento</h2>
+
+        <table className="styled-table">
+            <thead>
+                <tr style={{fontSize:"3vw"}}>
+                    <th className="empty-cell"></th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>M</th>
+                    <th>X</th>
+                    <th>J</th>
+                    <th>V</th>
+                    <th>S</th>
+                </tr>
+            </thead>
+            <tbody>
+            {Object.keys(slots.domingo).map((time, i) => (
+                <tr style={{fontSize:"2vw"}} key={i}>
+                {time % 60 === 0 ? (
+                    <td className="empty-cell">{`${time/60}:00 `}</td>): <td className="empty-cell"></td>}
+                    {Object.values(slots).map((day, j) => (
+                    <td key={j}
+                    style={{backgroundColor: getColor(day[time]), color:"white"}}
+                    ></td>
+                    ))}
+                </tr>
+            ))}
+            </tbody>
+        </table>
+    </div>
+  );
+}
+
+//array de prueba
+
+
+export default WeekTable;
+
+const userIntervals = [
+    'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--255-320',
+    'lunes--0-75', 'martes--420-720', 'miercoles--420-720', 'martes--435-720', 'viernes--1200-1260',
+    'sabado--300-360', 'domingo--600-660', 'lunes--120-180', 'martes--900-960', 'miercoles--600-660',
+    'jueves--360-420', 'viernes--240-300', 'sabado--1080-1140', 'domingo--1200-1260', 'lunes--540-600',
+    'martes--300-360', 'miercoles--720-780', 'jueves--660-720', 'viernes--780-840', 'sabado--960-1020',
+    'domingo--540-600', 'lunes--780-840', 'martes--240-300', 'miercoles--120-180', 'jueves--720-780',
+    'viernes--1140-1200', 'sabado--240-300', 'domingo--360-420', 'lunes--360-420', 'martes--840-900',
+    'miercoles--840-900', 'jueves--300-360', 'viernes--900-960', 'sabado--120-180', 'domingo--180-240',
+    'lunes--960-1020', 'martes--600-660', 'miercoles--660-720', 'jueves--780-840', 'viernes--1020-1080',
+    'sabado--360-420', 'domingo--480-540', 'lunes--420-480', 'martes--720-780', 'miercoles--480-540',
+    'jueves--840-900', 'viernes--360-420', 'sabado--840-900', 'domingo--720-780', 'lunes--1020-1080',
+    'martes--1020-1080', 'miercoles--1020-1080', 'jueves--1020-1080', 'viernes--1020-1080', 'sabado--1020-1080',
+    'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--255-320',
+    'lunes--0-75', 'martes--420-720', 'miercoles--420-720', 'martes--435-720', 'viernes--1200-1260',
+    'sabado--300-360', 'domingo--600-660', 'lunes--120-180', 'martes--900-960', 'miercoles--600-660',
+    'jueves--360-420', 'viernes--240-300', 'sabado--1080-1140', 'domingo--1200-1260', 'lunes--540-600',
+    'martes--300-360', 'miercoles--720-780', 'jueves--660-720', 'viernes--780-840', 'sabado--960-1020',
+    'domingo--540-600', 'lunes--780-840', 'martes--240-300', 'miercoles--120-180', 'jueves--720-780',
+    'viernes--1140-1200', 'sabado--240-300', 'domingo--360-420', 'lunes--360-420', 'martes--840-900',
+    'miercoles--840-900', 'jueves--300-360', 'viernes--900-960', 'sabado--120-180', 'domingo--180-240',
+    'lunes--960-1020', 'martes--600-660', 'miercoles--660-720', 'jueves--780-840', 'viernes--1020-1080',
+    'sabado--360-420', 'domingo--480-540', 'lunes--420-480', 'martes--720-780', 'miercoles--480-540',
+    'jueves--840-900', 'viernes--360-420', 'sabado--840-900', 'domingo--720-780', 'lunes--1020-1080',
+    'martes--1020-1080', 'miercoles--1020-1080', 'jueves--1020-1080', 'viernes--1020-1080', 'sabado--1020-1080'
+];
+
 let weekLapsesGlobalArray = {
     domingo: {
       "0": 0,
@@ -737,105 +843,5 @@ let weekLapsesGlobalArray = {
           "1425": 0
     }
 };
-
-const numberOfUsers = 8;
-//array de prueba
-const userIntervals = [
-    'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--255-320',
-    'lunes--0-75', 'martes--420-720', 'miercoles--420-720', 'martes--435-720', 'viernes--1200-1260',
-    'sabado--300-360', 'domingo--600-660', 'lunes--120-180', 'martes--900-960', 'miercoles--600-660',
-    'jueves--360-420', 'viernes--240-300', 'sabado--1080-1140', 'domingo--1200-1260', 'lunes--540-600',
-    'martes--300-360', 'miercoles--720-780', 'jueves--660-720', 'viernes--780-840', 'sabado--960-1020',
-    'domingo--540-600', 'lunes--780-840', 'martes--240-300', 'miercoles--120-180', 'jueves--720-780',
-    'viernes--1140-1200', 'sabado--240-300', 'domingo--360-420', 'lunes--360-420', 'martes--840-900',
-    'miercoles--840-900', 'jueves--300-360', 'viernes--900-960', 'sabado--120-180', 'domingo--180-240',
-    'lunes--960-1020', 'martes--600-660', 'miercoles--660-720', 'jueves--780-840', 'viernes--1020-1080',
-    'sabado--360-420', 'domingo--480-540', 'lunes--420-480', 'martes--720-780', 'miercoles--480-540',
-    'jueves--840-900', 'viernes--360-420', 'sabado--840-900', 'domingo--720-780', 'lunes--1020-1080',
-    'martes--1020-1080', 'miercoles--1020-1080', 'jueves--1020-1080', 'viernes--1020-1080', 'sabado--1020-1080',
-    'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--0-60', 'domingo--255-320',
-    'lunes--0-75', 'martes--420-720', 'miercoles--420-720', 'martes--435-720', 'viernes--1200-1260',
-    'sabado--300-360', 'domingo--600-660', 'lunes--120-180', 'martes--900-960', 'miercoles--600-660',
-    'jueves--360-420', 'viernes--240-300', 'sabado--1080-1140', 'domingo--1200-1260', 'lunes--540-600',
-    'martes--300-360', 'miercoles--720-780', 'jueves--660-720', 'viernes--780-840', 'sabado--960-1020',
-    'domingo--540-600', 'lunes--780-840', 'martes--240-300', 'miercoles--120-180', 'jueves--720-780',
-    'viernes--1140-1200', 'sabado--240-300', 'domingo--360-420', 'lunes--360-420', 'martes--840-900',
-    'miercoles--840-900', 'jueves--300-360', 'viernes--900-960', 'sabado--120-180', 'domingo--180-240',
-    'lunes--960-1020', 'martes--600-660', 'miercoles--660-720', 'jueves--780-840', 'viernes--1020-1080',
-    'sabado--360-420', 'domingo--480-540', 'lunes--420-480', 'martes--720-780', 'miercoles--480-540',
-    'jueves--840-900', 'viernes--360-420', 'sabado--840-900', 'domingo--720-780', 'lunes--1020-1080',
-    'martes--1020-1080', 'miercoles--1020-1080', 'jueves--1020-1080', 'viernes--1020-1080', 'sabado--1020-1080'
-  ];
-  
-for (const interval of userIntervals) {
-        const [day, range] = interval.split('--');
-        const [startInterval, endInterval] = range.split('-').map(Number);
-
-        const lapseInterval = parseInt((endInterval - startInterval)/15);
-
-        for(let i=0; i<lapseInterval; i++){
-            const checkingTime = startInterval+(15*i);
-            console.log(weekLapsesGlobalArray[day][checkingTime])
-            weekLapsesGlobalArray[day][checkingTime] += 1;
-        }
-}
-
-const WeekTable = () => {
-  const [slots, setSlots] = useState(weekLapsesGlobalArray);
-
-  //intervalos de prueba
-
-  useEffect(() => {
-
-    setSlots(weekLapsesGlobalArray);
-    // Iterate through the userIntervals array
-
-  }, []); 
-
-  // Determine the color based on the count
-  const getColor = (usersAvailable) => {
-    if(numberOfUsers == usersAvailable){
-        return `lightGreen`; 
-    }else{
-        let intensity = (255*(usersAvailable/numberOfUsers));
-        if(intensity>255){intensity=255};
-        return `rgb(255, ${255 - intensity}, 255)`;
-    }
-  };
-
-  return (
-    <div className="meeting-final-container">
-        <table className="styled-table">
-            <thead>
-                <tr>
-                <th>Hora</th>
-                <th>Domingo</th>
-                <th>Lunes</th>
-                <th>Martes</th>
-                <th>Miercoles</th>
-                <th>Jueves</th>
-                <th>Viernes</th>
-                <th>Sabado</th>
-                </tr>
-            </thead>
-            <tbody>
-            {Object.keys(slots.domingo).map((time, i) => (
-                <tr style={{fontSize:"10px"}} key={i}>
-                {time % 60 === 0 ? (
-                    <td>{`${time/60}:00 `}</td>): <td></td>}
-                    {Object.values(slots).map((day, j) => (
-                    <td key={j}
-                    style={{backgroundColor: getColor(day[time]), color:"white", fontSize:"10px"}}
-                    ></td>
-                    ))}
-                </tr>
-            ))}
-            </tbody>
-        </table>
-    </div>
-  );
-}
-
-export default WeekTable;
 
 
