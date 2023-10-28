@@ -3,18 +3,11 @@ import React, { useContext, useEffect } from "react";
 import { UserDataContext } from "./UserDataContext";
 import { useState } from "react";
 import axios from "axios";
-import "./CreateMeeting.css";
-import SelectAvailableHours from "./SelectAvailableHours";
+import "./SelectAvailableHours.css";
 
-const CreateMeeting = () => {
-  //const { currentUser } = useContext(AuthContext);
-  const {setIdGlobal, formGlobal, setFormG} =
-    useContext(UserDataContext);
+const SelectAvailableHours = ({setFormScheduleParentComponent}) => {
+  
   const [form, setForm] = useState({
-    nombre: "",
-    duracion: "",
-    cantidad: 0,
-    evento:"",
     horarios: {
       domingo:{
         isChecked: false,
@@ -49,7 +42,10 @@ const CreateMeeting = () => {
 
   let [error, setError] = useState("");
 
-  const hours = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+  useEffect(() => {
+    console.log(form)
+    setFormScheduleParentComponent(form.horarios);
+  }, [form]);
 
   //ME TRAJE ESTO -------------------------------
   const horas = [
@@ -151,28 +147,6 @@ const CreateMeeting = () => {
     "23:45",
   ];
 
-  //cada vez que form cambia, el Form Global se actualiza
-  useEffect(() => {
-    setFormG(form);
-    console.log(form)
-  }, [form]);
-
-  /*la primera vez que el componente carga, 
-  / se revisa si FormGlobal contiene info y la carga, de lo contrario se inicia form vacio*/
-  useEffect(() => {
-    if (Object.keys(formGlobal).length !== 0) {
-      setForm(formGlobal);
-    }
-  }, []);
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-    //console.log(form);
-  };
-
   const handleChecked = (e) => {
     //se crea un duplicado del form con el cambio check o unchecked al respectivo dia
     const newHorarios = {
@@ -234,10 +208,8 @@ const CreateMeeting = () => {
   
       if (type === "inicio") {
         updatedInterval = selectedValue + "-" + finIntervalo;
-        console.log(updatedInterval, 0)
       } else if (type === "fin") {
         updatedInterval = inicioIntervalo + "-" + selectedValue;
-        console.log(updatedInterval, 1)
       }
   
       updatedSchedule[index] = updatedInterval;
@@ -250,145 +222,9 @@ const CreateMeeting = () => {
     });
   };
 
-  //esta funcion actualiza el horario segun los cambios del componente SelectAvailableHours
-  const setFormSchedule = (schedule) => {
-    console.log(form)
-    setForm({...form, horarios: schedule});
-  }
-
-  const handleSubmit = async (e, form) => {
-    e.preventDefault();
-    if (form.duracion !== "" && form.nombre !== "" && form.cantidad !== "") {
-
-      //convertir horarios a formato 'L-600-720'
-      function getMinutesFromTime(time) {
-        const [hours, minutes] = time.split(':');
-        return parseInt(hours) * 60 + parseInt(minutes);
-      }
-
-      function convertIntervalsToMinutes(intervals) {
-        const tiempoPropuesto = [];
-      
-        for (const day in intervals) {
-            const daySchedule = intervals[day].schedule.map((interval) => {
-              const [start, end] = interval.split('-');
-              const startMinutes = getMinutesFromTime(start);
-              const endMinutes = getMinutesFromTime(end);
-              return `${day}--${startMinutes}-${endMinutes}`;
-            });
-      
-            tiempoPropuesto.push(...daySchedule);
-        }
-      
-        return tiempoPropuesto;
-      }
-      
-      //CHECA EL OUPUT
-      console.log(convertIntervalsToMinutes(form.horarios))
-      const proposedHours = convertIntervalsToMinutes(form.horarios); 
-
-      const res = await axios.post(
-        "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-meeting",
-        {
-          lengthMeeting: form.cantidad,
-          expirationDate: form.duracion,
-          adminName: form.nombre,
-          //agregue esto
-          adminHours: proposedHours
-        }
-      );
-      const idMeeting = res.data.meetingId;
-      setIdGlobal(form, idMeeting);
-      //console.log(form);
-      //console.log(res.data.meetingId);
-
-    } else {
-      setError("Necesitas completar todos los campos");
-      setTimeout(() => {
-        setError("");
-      }, 2000);
-      //console.log(setError);
-    }
-  };
-
   return (
-    <div className="createmeeting-container">
-      <h1>Crea un nuevo evento</h1>
-      <form>
-        <div className="label-container">
-          <span className="createMeeting-span">1</span>
-          <label htmlFor="nombre">¿Cómo te gusta que te llamen?</label>
-        </div>
-        <input
-          onChange={handleChange}
-          type="text"
-          id="nombre"
-          name="nombre"
-          placeholder="Ej. Pepe"
-          autoComplete="off"
-          value={form.nombre}
-        />
-        <div className="label-container">
-          <span className="createMeeting-span">2</span>
-          <label htmlFor="evento">Elige un nombre para tu evento</label>
-        </div>
-        <input
-          onChange={handleChange}
-          type="text"
-          id="evento"
-          name="evento"
-          placeholder="Nombre del evento"
-          autoComplete="off"
-          value={form.evento}
-        />
-        <div className="label-container">
-          <span className="createMeeting-span">3</span>
-          <label>Selecciona el limite del evento y su duración</label>
-        </div>
-        <div className="duration">
-          <div className="duration-days">
-            <input
-              onChange={handleChange}
-              type="number"
-              name="cantidad"
-              id="days"
-              min="0"
-              placeholder="0"
-              value={form["cantidad"]}
-            />
-            <label htmlFor="days">Días</label>
-          </div>
-          <div className="duration-minutes">
-            <select
-              name="duracion"
-              id="minutes"
-              value={form.duracion}
-              onChange={handleChange}
-            >
-              {hours.map((el, index) => (
-                <option key={index} value={el}>
-                  {el}
-                </option>
-              ))}
-            </select>
-            <label htmlFor="minutes">Minutos</label>
-          </div>
-        </div>
-        {/*seccion calendario (dias/horas)*/}
-        <div className="label-container">
-          <span className="createMeeting-span">4</span>
-          <label>
-            Selecciona los días y horarios que propones para tu evento
-          </label>
-        </div>
-        <small className="createMeeting-small">
-          Tus invitados podrán elegir sólo entre los días y horarios que tú
-          propones
-        </small>
-        <SelectAvailableHours 
-          setFormScheduleParentComponent={setFormSchedule}
-        />
-        {/* <section className="schedules-container">
+    <div className="Schedules-Form">
+        <section className="schedules-container">
 
           <div className="day">
             <div className="column-day">
@@ -680,7 +516,7 @@ const CreateMeeting = () => {
                   checked={form.horarios.viernes.isChecked}
                   onChange={handleChecked}
                 />
-                <label htmlFor="viernes">viernes</label>
+                <label htmlFor="viernes">Viernes</label>
               </div>
               <div className="icons">
                 <ion-icon name="add" onClick={(e) => handleAddSchedule(e, "viernes")}></ion-icon>
@@ -736,7 +572,7 @@ const CreateMeeting = () => {
                   checked={form.horarios.sabado.isChecked}
                   onChange={handleChecked}
                 />
-                <label htmlFor="sabado">sabado</label>
+                <label htmlFor="sabado">Sabado</label>
               </div>
               <div className="icons">
                 <ion-icon name="add" onClick={(e) => handleAddSchedule(e, "sabado")}></ion-icon>
@@ -782,22 +618,10 @@ const CreateMeeting = () => {
             </div>
           </div>
 
-              </section>*/}
-        {/*Aqui acaba la seccion calendario*/}
-        <span style={{color:'red'}}>{error}</span>
-        <button onClick={(e) => handleSubmit(e, form)}>Crear</button>
-      </form>
-      {/*}
-      {currentUser ? (
-        <p>
-          You are logged - <Link to="/dashboard">View Dashboard</Link>
-        </p>
-      ) : (
-        <p>
-          <Link to="/login">Log In</Link>
-        </p>
-      )}*/}
+        </section>
     </div>
   );
 };
-export default CreateMeeting;
+
+
+export default SelectAvailableHours;
