@@ -1,6 +1,8 @@
 /* Define a CSS class for your styled table */
 .styled-table {
     width: 80vw;
+    margin: 3vw;
+    max-width: 500px;
     border-collapse: collapse;
     font-size: 16px;
   }

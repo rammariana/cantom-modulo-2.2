@@ -78,11 +78,11 @@ const WeekTable = () => {
     const numberOfUsers = form.users?.length
 
     if(numberOfUsers == usersAvailable){
-        return `lightGreen`; 
+        return `rgb(134, 156, 255)`; 
     }else{
-        let intensity = (255*(usersAvailable/numberOfUsers));
-        if(intensity>255){intensity=255};
-        return `rgb(255, ${255 - intensity}, 255)`;
+        let intensity1 = (103*(usersAvailable/numberOfUsers));
+        let intensity2 = (139*(usersAvailable/numberOfUsers));
+        return `rgb(${255 - intensity1}, ${255 - intensity2}, 255)`;
     }
   };
 
@@ -91,6 +91,8 @@ const WeekTable = () => {
 
         <h1>{form.eventName || 'Evento ' + form.meetingId}</h1>
         <h2>Encuentra cuando pueden asistir todos los invitados a tu evento</h2>
+
+        <button>Unirme al evento</button>
 
         <table className="styled-table">
             <thead>

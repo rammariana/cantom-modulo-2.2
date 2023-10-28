@@ -162,7 +162,6 @@ const SelectAvailableHours = ({setFormScheduleParentComponent}) => {
       horarios: newHorarios
     });
   };
-
   //agrega un intervalo de horas vacio (00:00 - 00:00)
   const handleAddSchedule = (e, dia) => {
     console.log(dia, form);

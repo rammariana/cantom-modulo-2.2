@@ -173,83 +173,6 @@ const CreateMeeting = () => {
     //console.log(form);
   };
 
-  const handleChecked = (e) => {
-    //se crea un duplicado del form con el cambio check o unchecked al respectivo dia
-    const newHorarios = {
-      ...form.horarios,
-      [e.target.name]: {
-        ...form.horarios[e.target.name],
-        isChecked: !form.horarios[e.target.name]?.isChecked
-      }
-    };
-    //se sobreescribe el form
-    setForm({
-      ...form,
-      horarios: newHorarios
-    });
-  };
-
-  //agrega un intervalo de horas vacio (00:00 - 00:00)
-  const handleAddSchedule = (e, dia) => {
-    console.log(dia, form);
-    const newSchedule = "00:00-00:00"; 
-  
-    setForm({
-      ...form,
-      horarios: {
-        ...form.horarios,
-        [dia]: {
-          ...form.horarios[dia], 
-          schedule: [...form.horarios[dia].schedule, newSchedule],
-        },
-      },
-    });
-  };
-
-  const handleRemoveSchedule = (e, dia, indexToRemove) => {
-    setForm((prevForm) => {
-      const updatedHorarios = { ...prevForm.horarios };
-      const updatedSchedule = [...updatedHorarios[dia].schedule];
-
-      updatedSchedule.splice(indexToRemove, 1);
-  
-      updatedHorarios[dia] = { ...updatedHorarios[dia], schedule: updatedSchedule };
-  
-      return {
-        ...prevForm,
-        horarios: updatedHorarios,
-      };
-    });
-  };
-
-  const handleSelectChange = (e, type, dia, index) => {
-    const selectedValue = e.target.value;
-  
-    setForm((prevForm) => {
-      const updatedHorarios = { ...prevForm.horarios };
-      const updatedSchedule = [...updatedHorarios[dia].schedule];
-      const inicioIntervalo = updatedSchedule[index].split("-")[0];
-      const finIntervalo = updatedSchedule[index].split("-")[1];
-      let updatedInterval;
-  
-      if (type === "inicio") {
-        updatedInterval = selectedValue + "-" + finIntervalo;
-        console.log(updatedInterval, 0)
-      } else if (type === "fin") {
-        updatedInterval = inicioIntervalo + "-" + selectedValue;
-        console.log(updatedInterval, 1)
-      }
-  
-      updatedSchedule[index] = updatedInterval;
-      updatedHorarios[dia] = { ...updatedHorarios[dia], schedule: updatedSchedule };
-  
-      return {
-        ...prevForm,
-        horarios: updatedHorarios,
-      };
-    });
-  };
-
   //esta funcion actualiza el horario segun los cambios del componente SelectAvailableHours
   const setFormSchedule = (schedule) => {
     console.log(form)
@@ -800,4 +723,5 @@ const CreateMeeting = () => {
     </div>
   );
 };
+
 export default CreateMeeting;

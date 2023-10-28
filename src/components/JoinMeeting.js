@@ -19,7 +19,7 @@ const JoinMeeting = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     const id = Math.floor(Math.random() * 9999) + 1;
     const userName = nombre.concat(id);
     console.log(userName);
