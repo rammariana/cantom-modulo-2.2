@@ -33,10 +33,18 @@
   color: var(--color-titulos);
   background-color: var(--color-blanco);
   border: thin solid var(--color-titulos);
+  white-space: nowrap;
 }
 .meeting-container .copy-link ion-icon {
   color: var(--color-titulos);
   font-size: 1.3rem;
+  margin-right: 0.2rem;
+}
+.meeting-container span {
+  color: rgb(47, 138, 47);
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 6px rgba(100, 93, 93, 0.507);
+  transition: desplazar 1s ease-in-out;
 }
 .meeting-container section {
   display: flex;
@@ -56,5 +64,13 @@
   }
   .meeting-container .copy-link {
     max-width: 30%;
+  }
+}
+@keyframes desplazar {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
   }
 }

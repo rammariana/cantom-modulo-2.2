@@ -15,8 +15,8 @@ const MeetingId = () => {
     evento: "",
   });
   const params = useParams();
-  const meetingId = params.id;
-  //console.log(params, id);
+  const meetingId = params.id.replace(":", "");
+  //console.log(params.id.replace(":", ""));
   useEffect(() => {
     async function fechData() {
       try {
@@ -45,17 +45,15 @@ const MeetingId = () => {
 
   const handleCopyLink = () => {
     const linkToCopy = "https://.......";
-    navigator.clipboard
-      .writeText(linkToCopy)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => {
-          setCopied(false);
-        }, 1500);
-      })
-      .catch((error) => {
-        alert("No se pudo copiar el enlace: ", error);
-      });
+    try {
+      navigator.clipboard.writeText(linkToCopy);
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+    } catch (error) {
+      alert("No se pudo copiar el enlace: ", error);
+    }
   };
   return (
     <div className="meeting-container">
