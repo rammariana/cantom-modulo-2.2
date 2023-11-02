@@ -1,6 +1,7 @@
 nav a {
   color: rgb(235, 223, 245);
   text-decoration: none;
+  white-space: nowrap;
 }
 .nav-links {
   width: 100%;

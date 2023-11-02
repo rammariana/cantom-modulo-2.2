@@ -10,6 +10,7 @@ import { UserDataProvider } from "./UserDataContext";
 import CreateMeeting from "./CreateMeeting";
 import JoinMeeting from "./JoinMeeting";
 import UserInMeeting from "./UserInMeeting";
+import MeetingFinal from "./MeetingFinal";
 
 const Header = () => {
   const location = useLocation();
@@ -67,6 +68,15 @@ const Header = () => {
           element={
             <UserDataProvider>
               <UserInMeeting />
+            </UserDataProvider>
+          }
+        />
+        <Route
+          exact
+          path="/meeting-final/:meetingId"
+          element={
+            <UserDataProvider>
+              <MeetingFinal />
             </UserDataProvider>
           }
         />

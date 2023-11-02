@@ -37,7 +37,7 @@
   display: flex;
   gap: 0.5rem;
 }
-.token-container a{
+.token-container p{
   color: var(--color-lik-login-signup);
   text-decoration: none;
 }
@@ -48,6 +48,7 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: var(--color-blanco);
 }
 .token-container h3 {
@@ -57,6 +58,7 @@
   margin-bottom: 1rem;
 }
 .token-container input {
+  width: 80%;
   padding: 1rem;
   border: none;
   border-radius: 0.6rem;
@@ -72,8 +74,14 @@
   color: rgb(143, 158, 173);
 }
 
-@media screen and (min-width: 600px) {
-  .token-container {
-    max-width: 60%;
+@media screen and (min-width: 750px) {
+  .home-container {
+    padding: 0 10rem;
+  }
+}
+
+@media screen and (min-width: 950px) {
+  .home-container {
+    padding: 0 17rem;
   }
 }

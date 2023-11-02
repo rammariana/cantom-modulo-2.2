@@ -2,15 +2,17 @@ import React, { useContext, useEffect } from "react";
 import { UserDataContext } from "./UserDataContext";
 import { useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./MeetingId.css";
 
 const MeetingId = () => {
   const { id } = useContext(UserDataContext);
+  const [copied, setCopied] = useState(false);
   const [form, setForm] = useState({
     nombre: "",
     duracion: "",
     cantidad: 0,
+    evento: "",
   });
   const params = useParams();
   const meetingId = params.id;
@@ -30,6 +32,7 @@ const MeetingId = () => {
           nombre: res.data.adminName,
           duracion: res.data.expirationDate,
           cantidad: res.data.lengthMeeting,
+          evento: res.data.eventName,
         });
 
         //console.log(res);
@@ -40,14 +43,56 @@ const MeetingId = () => {
     fechData();
   }, [id, meetingId]);
 
+  const handleCopyLink = () => {
+    const linkToCopy = "https://.......";
+    navigator.clipboard
+      .writeText(linkToCopy)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 1500);
+      })
+      .catch((error) => {
+        alert("No se pudo copiar el enlace: ", error);
+      });
+  };
   return (
     <div className="meeting-container">
       <section>
-        <h1>Hola {form.nombre}</h1>
-        <h5>El id de tu evento es: {meetingId}</h5>
-        <p>Nombre: {form.nombre}</p>
+        <h1>¡Evento creado!</h1>
+        <h5>
+          Código de evento: <b>{meetingId}</b>
+        </h5>
+        <p>
+          Podrás encontrar el mejor horario para ti y tus invitados en dabdo
+          click en el botón de abajo.
+        </p>
+        <small>
+          Invita a tus amigos a unirse a tu evento usando este enlace:
+        </small>
+        {copied && <span>copiado!</span>}
+        <button className="copy-link" onClick={handleCopyLink}>
+          {" "}
+          <span>
+            <ion-icon name="copy"></ion-icon>
+          </span>
+          Copy link
+        </button>
+        {/*
+        <p>Evento {form.evento}</p>
         <p>Duracion del evento: {form.cantidad} días</p>
         <p>Tiempo: {form.duracion} minutos</p>
+        */}
+
+        <Link to={`/meeting-final/:${meetingId}`}>
+          <button>Ver horarios</button>
+        </Link>
+        {/*Aqui debe ir una redirección al meetingFinal*/}
+        <Link to={`/create-meeting`}>
+          <button>Crear nuevo evento</button>
+        </Link>
+        {/*Aqui va una redirección al createMeeting*/}
       </section>
     </div>
   );

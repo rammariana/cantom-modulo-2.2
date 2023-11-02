@@ -11,7 +11,50 @@
   padding: 2rem;
   padding-top: 4rem;
   background-color: rgb(172, 141, 230);
+
 }
-.meeting-container h5, p {
+.meeting-container a {
+  text-decoration: none;
   color: var(--color-blanco);
+  width: 100%;
+}
+.meeting-container b, .meeting-container small, .meeting-container h5, .meeting-container p {
+  color: var(--color-titulos);
+}
+.meeting-container button {
+  margin: 1rem 0;
+}
+.meeting-container .copy-link {
+  max-width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0.5rem 0.8rem;
+  color: var(--color-titulos);
+  background-color: var(--color-blanco);
+  border: thin solid var(--color-titulos);
+}
+.meeting-container .copy-link ion-icon {
+  color: var(--color-titulos);
+  font-size: 1.3rem;
+}
+.meeting-container section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media screen and (min-width: 600px) {
+  .meeting-container {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
+}
+@media screen and (min-width: 750px) {
+  .meeting-container {
+    padding-left: 15rem;
+    padding-right: 15rem;
+  }
+  .meeting-container .copy-link {
+    max-width: 30%;
+  }
 }

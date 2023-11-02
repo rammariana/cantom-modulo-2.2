@@ -1,38 +1,41 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./JoinMeeting.css";
 import { UserDataContext } from "./UserDataContext";
 //import React from "react";
 
 const JoinMeeting = () => {
-  const { token } = useContext(UserDataContext);
-  const [nombre, setNombre] = useState("");
-  console.log("joinmeeting", token);
-
+  const { token, setNameGlobal } = useContext(UserDataContext);
+  const [message, setMessage] = useState("");
+  const [inputName, setInputName] = useState("");
+  const navigate = useNavigate();
+  //console.log("joinmeeting", token);
+  //26IDIXU5
   const handleChange = (e) => {
-    setNombre(e.target.value);
+    setInputName(e.target.value);
   };
   useEffect(() => {
-    console.log(nombre);
-  }, [nombre]);
+    console.log(inputName);
+  }, [inputName]);
 
   const handleSubmit = async (e) => {
+    console.log(inputName);
+
     e.preventDefault();
-
-    const id = Math.floor(Math.random() * 9999) + 1;
-    const userName = nombre.concat(id);
-    console.log(userName);
-
-    const res = await axios.post(
-      "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-user-in-meeting",
-
-      {
-        meetingId: token,
-        userId: userName,
-      }
-    );
-    console.log(res);
+    setNameGlobal(inputName);
+    if (inputName && token) {
+      navigate("/user-in-meeting");
+    } else if (!token || token === undefined) {
+      setMessage(`Necesitas el Id de la reunión\nVuelve al home`);
+      setTimeout(() => {
+        setMessage("");
+      }, 1500);
+    } else {
+      setMessage("Necesitas proporcionar un nombre");
+      setTimeout(() => {
+        setMessage("");
+      }, 1500);
+    }
   };
 
   return (
@@ -46,12 +49,13 @@ const JoinMeeting = () => {
           id="nombre"
           autoComplete="off"
           placeholder="Ej. Pepe"
-          value={nombre}
+          value={inputName}
           onChange={handleChange}
         />
+        <span style={{ whiteSpace: "pre-line" }}>{message}</span>
         <button onClick={handleSubmit}>Unirme</button>
       </form>
-      {/* Aquí va una redirección a la vista del usuario que se une y una petición para buscar el token y los datos de los dias permitidos y sus horarios*/}
+      {/* Aquí va una redirección a la vista del usuario que se une y una petición para buscar el token y los datos de los dias*/}
     </div>
   );
 };
