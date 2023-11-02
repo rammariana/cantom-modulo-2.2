@@ -33,6 +33,7 @@
   height: 1.5rem;
   border: thin solid var(--color-span);
   border-radius: 50%;
+  color: var(--color-span);
 }
 .userInMeeting-container .label-container label {
   width: 100%;

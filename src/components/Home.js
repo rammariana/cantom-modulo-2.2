@@ -60,9 +60,9 @@ const Home = () => {
         <span>{message}</span>
         <p onClick={handleJoinMeeting}>Unirme al evento</p>
       </div>
-      <button>
-        <Link to="/create-meeting">Crear nuevo evento</Link>
-      </button>
+      <Link to="/create-meeting">
+        <button>Crear nuevo evento</button>
+      </Link>
     </div>
   );
 };

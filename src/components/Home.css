@@ -16,6 +16,9 @@
   padding-top: 5rem;
   background-color: var(--color-primario-home);
 }
+.home-container a {
+  width: 100%;
+}
 .home-container button {
   width: 100%;
 }
@@ -51,6 +54,7 @@
   align-items: center;
   background-color: var(--color-blanco);
 }
+
 .token-container h3 {
   font-weight:bold;
 }
