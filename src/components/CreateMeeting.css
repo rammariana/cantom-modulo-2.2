@@ -1,11 +1,14 @@
 :root {
-  --color-primario: rgb(208, 196, 219);
-  --color-span: rgb(179, 110, 243);
-  --color-titulos: rgb(41, 16, 85);
-  --color-lik-login-signup: rgb(62, 126, 247);
+  --color-primario: #E3DFFD;
+  --color-h1-input-text-btn: #ECF2FF;
+  --color-fondo-home: #BEADFA;
+  --color-text-color-input: #002147;
+  --color-negro-texto-inicio-border-select: #000000;
+  --color-link-login-signup-btn: #869CFF;
   --color-blur-input: rgb(152, 186, 249);
-  --color-blanco: rgb(235, 223, 245);
-  --color-hr: rgb(191, 188, 194);
+  --color-placeholder: #908F8F;
+  --color-span: #9874FF;
+  -color-icono: #222222;
 }
 .createmeeting-container {
   min-height: 100vh;
@@ -21,6 +24,7 @@
 }
 .createmeeting-container h1 {
   margin-top: 5rem;
+  color: var(--color-negro-texto-inicio-border-select);
 }
 .createMeeting-small {
   width: 80%;
@@ -56,6 +60,7 @@
   text-align: justify;
   text-indent: 15%;
   font-style: italic;
+  color: var(--color-negro-texto-inicio-border-select);
 }
 .checkbox {
   width: 100%;
@@ -65,7 +70,9 @@
   width: 20%;
 }
 .checkbox label {
-  color: var(--color-titulos);
+  color: var(--color-negro-texto-inicio-border-select);
+  padding-left: 0.4rem;
+  font-weight: 600;
 }
 .checkbox input:focus {
   box-shadow: none;

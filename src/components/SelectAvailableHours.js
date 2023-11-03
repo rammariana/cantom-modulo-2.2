@@ -214,7 +214,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
         setSelectInicio(selectedValue);
         console.log(selectInicio);
 
-        // si updatedHorarios[dia].schedule[index] (separar los intervalos)
 
         updatedInterval = selectedValue + "-" + finIntervalo;
         console.log(updatedHorarios[dia]);
@@ -228,7 +227,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
             .replace(":", "");
           console.log(intervaloInicioActual, intervaloFinalAnterior);
           if (Number(intervaloInicioActual) < Number(intervaloFinalAnterior)) {
-            console.log("solapado");
+            console.error("solapado");
           }
         }
       } else if (type === "fin") {

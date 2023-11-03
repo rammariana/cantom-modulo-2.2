@@ -1,25 +1,33 @@
 :root {
-  --color-primario: rgb(208, 196, 219);
-  --color-titulos: rgb(41, 16, 85);
-  --color-lik-login-signup: rgb(62, 126, 247);
+  --color-primario: #E3DFFD;
+  --color-h1-input-text-btn: #ECF2FF;
+  --color-fondo-home: #BEADFA;
+  --color-text-color-input: #002147;
+  --color-negro-texto-inicio-border-select: #000000;
+  --color-link-login-signup-btn: #869CFF;
   --color-blur-input: rgb(152, 186, 249);
-  --color-blanco: rgb(235, 223, 245);
+  --color-placeholder: #908F8F;
+  --color-span: #9874FF;
+  --color-icono: #222222;
 }
 .meeting-container {
   min-height: 100vh;
   text-align: center;
   padding: 2rem;
   padding-top: 4rem;
-  background-color: rgb(172, 141, 230);
+  background-color: var(--color-h1-input-text-btn);
 
+}
+.meeting-container h1 {
+  color: var(--color-negro-texto-inicio-border-select);
 }
 .meeting-container a {
   text-decoration: none;
-  color: var(--color-blanco);
+  color: var(--color-h1-input-text-btn);
   width: 100%;
 }
 .meeting-container b, .meeting-container small, .meeting-container h5, .meeting-container p {
-  color: var(--color-titulos);
+  color: var(--color-negro-texto-inicio-border-select);
 }
 .meeting-container button {
   margin: 1rem 0;
@@ -30,13 +38,13 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 0.5rem 0.8rem;
-  color: var(--color-titulos);
-  background-color: var(--color-blanco);
-  border: thin solid var(--color-titulos);
+  color: var(--color-negro-texto-inicio-border-select);
+  background-color: var(--color-h1-input-text-btn);
+  border: thin solid var(--color-negro-texto-inicio-border-select);
   white-space: nowrap;
 }
 .meeting-container .copy-link ion-icon {
-  color: var(--color-titulos);
+  color: var(--color-icono);
   font-size: 1.3rem;
   margin-right: 0.2rem;
 }
@@ -50,6 +58,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.meeting-container .btn-excentrico {
+  background-color: transparent;
+  border: 2px solid var(--color-link-login-signup-btn);
+  color: var(--color-link-login-signup-btn);
 }
 @media screen and (min-width: 600px) {
   .meeting-container {

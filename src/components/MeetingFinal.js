@@ -54,7 +54,7 @@ const WeekTable = () => {
   return (
     <div className="meeting-final-container">
       <h1>{form.eventName || "Evento " + form.meetingId}</h1>
-      <h2>Encuentra cuando pueden asistir todos los invitados a tu evento</h2>
+      <p>Encuentra cuando pueden asistir todos los invitados a tu evento</p>
 
       <Link to="/join-meeting">
         <button>Unirme al evento</button>

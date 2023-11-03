@@ -1,8 +1,14 @@
 :root {
-  --color-primario: rgb(208, 196, 219);
-  --color-titulos: rgb(41, 16, 85);
-  --color-lik-login-signup: rgb(62, 126, 247);
-   --color-blur-input: rgb(152, 186, 249);
+  --color-primario: #E3DFFD;
+  --color-h1-input-text-btn: #ECF2FF;
+  --color-fondo-home: #BEADFA;
+  --color-text-color-input: #002147;
+  --color-negro-texto-inicio-border-select: #000000;
+  --color-link-login-signup-btn: #869CFF;
+  --color-blur-input: rgb(152, 186, 249);
+  --color-placeholder: #908F8F;
+  --color-span: #9874FF;
+  -color-icono: #222222;
 }
 
 button {
@@ -10,9 +16,9 @@ button {
   border-radius: 0.3rem;
   width: 80%;
   padding: 1rem 0;
-  color: white;
+  color: var(--color-h1-input-text-btn);
   font-size: 1rem;
-  background-color: rgb(161, 89, 228);
+  background-color: var(--color-link-login-signup-btn);
 }
 form {
   display: flex;
@@ -28,6 +34,7 @@ form input {
   border-radius: 0.3rem;
   padding: 1rem;
   border-radius: 0.6rem;
+  background-color: var(--color-primario-home-h1-input-text-btn);
 }
 form input:focus {
   outline: none;
@@ -37,16 +44,20 @@ form input:focus {
 form label, form p {
   text-align: justify;
   width: 80%;
-  color: var(--color-titulos);
+  font-size: 1.2rem;
+  color: var(--color-text-color-input);
 }
 h1 {
-  color: var(--color-titulos);
+  color: var(--color-text-color-input);
   margin: 2rem;
   font-size: 1.8rem;
 }
+ion-icon {
+  color: var(--color-placeholder);
+}
 input::placeholder{
   font-size: 1rem;
-  color: rgb(143, 158, 173);
+  color: var(--color-placeholder);
 }
 /* Icono visibles o invisibles*/
 .input-field {

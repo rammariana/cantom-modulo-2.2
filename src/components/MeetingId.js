@@ -84,11 +84,11 @@ const MeetingId = () => {
         */}
 
         <Link to={`/meeting-final/:${meetingId}`}>
-          <button>Ver horarios</button>
+          <button>Ver mejor horario</button>
         </Link>
         {/*Aqui debe ir una redirección al meetingFinal*/}
         <Link to={`/create-meeting`}>
-          <button>Crear nuevo evento</button>
+          <button className="btn-excentrico">Crear nuevo evento</button>
         </Link>
         {/*Aqui va una redirección al createMeeting*/}
       </section>

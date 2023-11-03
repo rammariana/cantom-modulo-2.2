@@ -11,6 +11,8 @@ import CreateMeeting from "./CreateMeeting";
 import JoinMeeting from "./JoinMeeting";
 import UserInMeeting from "./UserInMeeting";
 import MeetingFinal from "./MeetingFinal";
+import MeetEase from "../assets/MeetEase.png";
+import MeetEaseHome from "../assets/MeetEaseHome.png";
 
 const Header = () => {
   const location = useLocation();
@@ -20,9 +22,15 @@ const Header = () => {
     <>
       <nav className="nav-links">
         <div className="logo">
-          <Link to="/">Logo</Link>
+          <Link to="/">
+            {location.pathname === "/home" || location.pathname === "/" ? (
+              <img src={MeetEaseHome} alt="MeetEase" />
+            ) : (
+              <img src={MeetEase} alt="MeetEase" />
+            )}
+          </Link>
         </div>
-        {location.pathname !== "/login" && location.pathname !== "/signup" && (
+        {location.pathname === "/" && (
           <div className="login-container">
             <Link to="/login">Log In</Link>
             <Link to="/signup">Sign Up</Link>

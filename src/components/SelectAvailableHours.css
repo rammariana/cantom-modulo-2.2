@@ -1,22 +1,14 @@
 :root {
-  --color-primario: rgb(208, 196, 219);
-  --color-span: rgb(179, 110, 243);
-  --color-titulos: rgb(41, 16, 85);
-  --color-lik-login-signup: rgb(62, 126, 247);
-  --color-blur-input: #98baf9;
-  --color-blanco: rgb(235, 223, 245);
-  --color-hr: rgb(191, 188, 194);
-  /*#869CFF; btn y no tengo cuenta btn crear ebento meetingid
-  background: #E3DFFD; tokencontainer login register crear evento
-  background: #ECF2FF; input h1 de home
-  background: #002147; text color y h1 color texto de input
-background: #000000; texto inicio "encuentra horario..." login h1 registre borde de selects
-background: #908F8F; placeholder
-background: #9874FF; span
-background: #222222; icono basura y mas
-
-
-*/
+  --color-primario: #E3DFFD;
+  --color-h1-input-text-btn: #ECF2FF;
+  --color-fondo-home: #BEADFA;
+  --color-text-color-input: #002147;
+  --color-negro-texto-inicio-border-select: #000000;
+  --color-link-login-signup-btn: #869CFF;
+  --color-blur-input: rgb(152, 186, 249);
+  --color-placeholder: #908F8F;
+  --color-span: #9874FF;
+  --color-icono: #222222;
 }
 .Schedules-Form {
   width: 80%;
@@ -75,9 +67,7 @@ background: #222222; icono basura y mas
   flex-direction: column;
   margin-top: 1rem;
 }
-.Schedules-Form .day hr {
-  border: 1.6px solid var(--color-hr);
-}
+
 .Schedules-Form .duration-days input {
   padding: 1.1rem;
   width: 100%;
@@ -85,10 +75,11 @@ background: #222222; icono basura y mas
 .Schedules-Form .duration-days input::placeholder, .duration-minutes select, .duration-days input {
   text-align: center;
 }
-.Schedules-Form .duration-minutes select {
+.duration .duration-minutes select {
   padding: 1rem;
   border: none;
   border-radius: 0.5rem;
+  background-color: var(--color-h1-input-text-btn);
 }
 .Schedules-Form .duration-minutes select:focus {
   outline: none;
@@ -117,7 +108,7 @@ background: #222222; icono basura y mas
   justify-content: space-between;
 }
 .Schedules-Form .icons ion-icon, .trash ion-icon {
-  color: var(--color-titulos);
+  color: var(--color-icono);
 }
 .Schedules-Form .label-container {
   width: 80%;
@@ -152,7 +143,7 @@ background: #222222; icono basura y mas
   width: 100%;
 }
 .Schedules-Form .schedules span {
-  color: var(--color-blanco);
+  color: var(--color-h1-input-text-btn);
 }
 .Schedules-Form .selects {
   display: inline-flex;
