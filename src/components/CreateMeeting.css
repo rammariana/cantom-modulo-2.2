@@ -191,3 +191,8 @@ form .duration {
     padding-right: 10rem;
   }
 }
+@media screen and (min-width: 950px) {
+  .createmeeting-container form button {
+    width: 50%;
+  }
+}

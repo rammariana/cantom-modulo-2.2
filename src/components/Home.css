@@ -43,6 +43,7 @@
 .token-container p{
   color: var(--color-lik-login-signup);
   text-decoration: none;
+  cursor: pointer;
 }
 .token-container {
   width: 100%;
@@ -87,5 +88,16 @@
 @media screen and (min-width: 950px) {
   .home-container {
     padding: 0 17rem;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .home-container {
+    padding: 0 19rem;
+  }
+  .token-container {
+    width: 80%;
+  }
+  .home-container button {
+    width: 80%;
   }
 }

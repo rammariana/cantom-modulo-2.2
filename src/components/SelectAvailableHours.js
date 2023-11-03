@@ -133,8 +133,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
     "23:30",
     "23:45",
   ];
-  const [selectInicio, setSelectInicio] = useState(null);
-  const [selectFinal, setSelectFinal] = useState(null);
+  const [selectInicio, setSelectInicio] = useState(0);
   useEffect(() => {
     console.log(form);
     setFormScheduleParentComponent(form.horarios);
@@ -211,27 +210,38 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       const finIntervalo = updatedSchedule[index].split("-")[1];
       let updatedInterval;
 
-      console.log(form.horarios[dia].schedule[index].split("-")[0]);
       if (type === "inicio") {
+        setSelectInicio(selectedValue);
+        console.log(selectInicio);
+
         // si updatedHorarios[dia].schedule[index] (separar los intervalos)
 
         updatedInterval = selectedValue + "-" + finIntervalo;
         console.log(updatedHorarios[dia]);
-        console.log(inicioIntervalo);
+
+        if (index > 0) {
+          const intervaloInicioActual = updatedSchedule[index]
+            .split("-")[0]
+            .replace(":", "");
+          const intervaloFinalAnterior = updatedSchedule[index - 1]
+            .split("-")[1]
+            .replace(":", "");
+          console.log(intervaloInicioActual, intervaloFinalAnterior);
+          if (Number(intervaloInicioActual) < Number(intervaloFinalAnterior)) {
+            console.log("solapado");
+          }
+        }
       } else if (type === "fin") {
         updatedInterval = inicioIntervalo + "-" + selectedValue;
-        console.log("fin", form);
 
-        //updatedIntervalFin = selectedValue;
-      }
-      setSelectInicio(Number(inicioIntervalo.replace(":", "")));
-      setSelectFinal(Number(finIntervalo.replace(":", "")));
-      if (selectInicio > selectFinal) {
-        console.error("erorr");
-        //alert("error");
-        console.log("uno", selectInicio, "dos", selectFinal);
-        e.target.value = "00:00";
-        return prevForm;
+        if (
+          Number(selectInicio.replace(":", "")) >
+          Number(e.target.value.replace(":", ""))
+        ) {
+          console.error("error intervalos");
+          e.target.value = "00:00";
+          return prevForm;
+        }
       }
 
       updatedSchedule[index] = updatedInterval;
@@ -248,8 +258,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
   };
   useEffect(() => {
     console.log(selectInicio);
-    console.log(selectFinal);
-  }, [selectFinal, selectInicio]);
+  }, [selectInicio]);
   return (
     <div className="Schedules-Form">
       <section className="schedules-container">

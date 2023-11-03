@@ -3,9 +3,20 @@
   --color-span: rgb(179, 110, 243);
   --color-titulos: rgb(41, 16, 85);
   --color-lik-login-signup: rgb(62, 126, 247);
-  --color-blur-input: rgb(152, 186, 249);
+  --color-blur-input: #98baf9;
   --color-blanco: rgb(235, 223, 245);
   --color-hr: rgb(191, 188, 194);
+  /*#869CFF; btn y no tengo cuenta btn crear ebento meetingid
+  background: #E3DFFD; tokencontainer login register crear evento
+  background: #ECF2FF; input h1 de home
+  background: #002147; text color y h1 color texto de input
+background: #000000; texto inicio "encuentra horario..." login h1 registre borde de selects
+background: #908F8F; placeholder
+background: #9874FF; span
+background: #222222; icono basura y mas
+
+
+*/
 }
 .Schedules-Form {
   width: 80%;
