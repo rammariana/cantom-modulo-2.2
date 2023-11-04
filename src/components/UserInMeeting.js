@@ -134,6 +134,7 @@ const UserInMeeting = () => {
           availableHours: proposedHours,
         }
       );
+      navigate(`/meeting-final/:${idReunion}`)
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -197,7 +198,7 @@ const UserInMeeting = () => {
               setFormScheduleParentComponent={setFormSchedule}
             />
             <span style={{ color: "red" }}>{error}</span>
-            <button onClick={(e) => handleSubmit(e, form)}>Crear</button>
+            <button onClick={(e) => handleSubmit(e, form)}>Unirse</button>
           </section>
         </>
       ) : (
