@@ -169,20 +169,59 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
   //agrega un intervalo de horas vacio (00:00 - 00:00)
   const handleAddSchedule = (e, dia) => {
     console.log(dia, form);
-    const newSchedule = "00:00-00:00";
+  
+    let newSchedule;
+    const currentSchedule = form.horarios[dia].schedule;
+  
+    if (currentSchedule.length === 0) {
+      newSchedule = "00:00-00:15";
+    } else {
+      const lastInterval = currentSchedule[currentSchedule.length - 1];
+      const [begin, end] = lastInterval.split("-");
+      const [endHour, endMin] = end.split(":");
+      let beginHourNew = Number(end.split(":")[0]);
+      let beginMinNew = Number(endMin) + 15;
+      let endHourNew = Number(end.split(":")[0]);
+      let endMinNew = Number(endMin) + 30;
 
+  
+      if (beginMinNew >= 60) {
+        beginMinNew -= 60;
+        beginHourNew += 1;
+      }
+
+      if (endMinNew >= 60) {
+        endMinNew -= 60;
+        endHourNew += 1;
+      }
+  
+      if (endHourNew >= 24) {
+        return; // Don't add intervals past 23:45
+      }
+
+      if(beginMinNew==0){beginMinNew="00"}
+  
+      if (beginHourNew < 10) {
+        newSchedule = `0${beginHourNew}:${beginMinNew}-${endHourNew}:${endMinNew}`;
+      } else if (endHourNew<10){
+        newSchedule = `0${beginHourNew}:${beginMinNew}-0${endHourNew}:${endMinNew}`;
+      } else{
+        newSchedule = `${beginHourNew}:${beginMinNew}-${endHourNew}:${endMinNew}`
+      }
+    }
+  
     setForm({
       ...form,
       horarios: {
         ...form.horarios,
         [dia]: {
           ...form.horarios[dia],
-          schedule: [...form.horarios[dia].schedule, newSchedule],
+          schedule: [...currentSchedule, newSchedule],
         },
       },
     });
   };
-
+  
   const handleRemoveSchedule = (e, dia, indexToRemove) => {
     setForm((prevForm) => {
       const updatedHorarios = { ...prevForm.horarios };
@@ -248,9 +287,94 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
     });
   };
 
+ const daySchedule = (dia) =>{
+  return(
+      <div className="column-schedule">
+      {form.horarios[dia].isChecked ? (
+        form.horarios[dia]?.schedule?.map((intervalo, index) => (
+          <div key={index} id={index}>
+            <div className="div-schedule">
+              <select
+                onChange={(e) =>
+                  handleSelectChange(e, "inicio", dia, index)
+                }
+              >
+                {horas.map((horaInicio, indexHoras) => {
+                  const startHour = Number(horaInicio.replace(":", ""));
+                  const prevEndHour = Number(
+                    form.horarios[dia]?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                  );
+                  const currentEndHour = Number(
+                    form.horarios[dia]?.schedule[index]?.split("-")[1].replace(":", "")
+                  );
+                  const isDisabled =
+                    startHour <= prevEndHour ||
+                    (startHour >= currentEndHour && currentEndHour !== 0);
+
+                  if (!isDisabled) {
+                    return (
+                      <option key={indexHoras} 
+                      value={horaInicio}
+                      selected={horaInicio === intervalo.split("-")[0]}
+                      >
+                        {horaInicio}
+                      </option>
+                    );
+                  }
+
+                  return null; // Don't render the option
+              })}
+
+              </select>
+              <p>-</p>
+              <select
+                onChange={(e) =>
+                  handleSelectChange(e, "fin", dia, index)
+                }
+              >
+                {horas.map((horaFin, indexHoras) => {
+                  const endHour = Number(horaFin.replace(":", ""));
+                  const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                  const startHourNextIndex = Number(form.horarios[dia].schedule[index+1]?.split("-")[0].replace(":", ""))
+                  const isDisabled = endHour <= startHour || endHour >= startHourNextIndex;
+
+                  if(!isDisabled){
+                    return (
+                      <option
+                        key={indexHoras}
+                        value={horaFin}
+                        selected={horaFin === intervalo.split("-")[1]}
+                      >
+                        {horaFin}
+                      </option>
+                    );
+                  }
+                  return null;
+                })}
+
+              </select>
+            </div>
+
+            <div className="trash">
+              <ion-icon
+                name="trash"
+                onClick={(e) => handleRemoveSchedule(e, dia, index)}
+              ></ion-icon>
+            </div>
+          </div>
+        ))
+      ) : (
+        <span>No seleccionado</span>
+      )}
+    </div>
+  )
+ }
+
+
   return (
     <div className="Schedules-Form">
       <section className="schedules-container">
+
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -271,81 +395,9 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
               <ion-icon name="copy"></ion-icon>
             </div>
           </div>
-          <div className="column-schedule">
-            {form.horarios.domingo.isChecked ? (
-              form.horarios.domingo?.schedule?.map((intervalo, index) => (
-                <div key={index} id={index}>
-                  <div className="div-schedule">
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "inicio", "domingo", index)
-                      }
-                    >
-                      {horas.map((horaInicio, indexHoras) => {
-                        const startHour = Number(horaInicio.replace(":", ""));
-                        const prevEndHour = Number(
-                          form.horarios.domingo?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                        );
-                        const currentEndHour = Number(
-                          form.horarios.domingo?.schedule[index]?.split("-")[1].replace(":", "")
-                        );
-                        const isDisabled =
-                          startHour <= prevEndHour ||
-                          (startHour >= currentEndHour && currentEndHour !== 0);
-
-                        if (!isDisabled) {
-                          return (
-                            <option key={indexHoras} value={horaInicio}>
-                              {horaInicio}
-                            </option>
-                          );
-                        }
-
-                        return null; // Don't render the option
-                    })}
-
-                    </select>
-                    <p>-</p>
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "fin", "domingo", index)
-                      }
-                    >
-                      {horas.map((horaFin, indexHoras) => {
-                        const endHour = Number(horaFin.replace(":", ""));
-                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                        const isDisabled = endHour <= startHour;
-
-                        if(!isDisabled){
-                          return (
-                            <option
-                              key={indexHoras}
-                              value={horaFin}
-                              selected={horaFin === intervalo.split("-")[1]}
-                            >
-                              {horaFin}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
-
-                    </select>
-                  </div>
-
-                  <div className="trash">
-                    <ion-icon
-                      name="trash"
-                      onClick={(e) => handleRemoveSchedule(e, "domingo", index)}
-                    ></ion-icon>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <span>No seleccionado</span>
-            )}
-          </div>
+          {daySchedule("domingo")}
         </div>
+
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -366,79 +418,9 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
               <ion-icon name="copy"></ion-icon>
             </div>
           </div>
-          <div className="column-schedule">
-            {form.horarios.lunes.isChecked ? (
-              form.horarios.lunes?.schedule?.map((intervalo, index) => (
-                <div key={index} id={index}>
-                  <div className="div-schedule">
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "inicio", "lunes", index)
-                      }
-                    >
-                      {horas.map((horaInicio, indexHoras) => {
-                        const startHour = Number(horaInicio.replace(":", ""));
-                        const prevEndHour = Number(
-                          form.horarios.lunes?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                        );
-                        const currentEndHour = Number(
-                          form.horarios.lunes?.schedule[index]?.split("-")[1].replace(":", "")
-                        );
-                        const isDisabled =
-                          startHour <= prevEndHour ||
-                          (startHour >= currentEndHour && currentEndHour !== 0);
-
-                        if (!isDisabled) {
-                          return (
-                            <option key={indexHoras} value={horaInicio}>
-                              {horaInicio}
-                            </option>
-                          );
-                        }
-
-                        return null; // Don't render the option
-                    })}
-                    </select>
-                    <p>-</p>
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "fin", "lunes", index)
-                      }
-                    >
-                      {horas.map((horaFin, indexHoras) => {
-                        const endHour = Number(horaFin.replace(":", ""));
-                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                        const isDisabled = endHour <= startHour;
-
-                        if(!isDisabled){
-                          return (
-                            <option
-                              key={indexHoras}
-                              value={horaFin}
-                              selected={horaFin === intervalo.split("-")[1]}
-                            >
-                              {horaFin}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="trash">
-                    <ion-icon
-                      name="trash"
-                      onClick={(e) => handleRemoveSchedule(e, "lunes", index)}
-                    ></ion-icon>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <span>No seleccionado</span>
-            )}
-          </div>
+          {daySchedule("lunes")}
         </div>
+
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -459,79 +441,9 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
               <ion-icon name="copy"></ion-icon>
             </div>
           </div>
-          <div className="column-schedule">
-            {form.horarios.martes.isChecked ? (
-              form.horarios.martes?.schedule?.map((intervalo, index) => (
-                <div key={index} id={index}>
-                  <div className="div-schedule">
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "inicio", "martes", index)
-                      }
-                    >
-                      {horas.map((horaInicio, indexHoras) => {
-                        const startHour = Number(horaInicio.replace(":", ""));
-                        const prevEndHour = Number(
-                          form.horarios.martes?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                        );
-                        const currentEndHour = Number(
-                          form.horarios.martes?.schedule[index]?.split("-")[1].replace(":", "")
-                        );
-                        const isDisabled =
-                          startHour <= prevEndHour ||
-                          (startHour >= currentEndHour && currentEndHour !== 0);
-
-                        if (!isDisabled) {
-                          return (
-                            <option key={indexHoras} value={horaInicio}>
-                              {horaInicio}
-                            </option>
-                          );
-                        }
-
-                        return null; // Don't render the option
-                      })}
-                    </select>
-                    <p>-</p>
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "fin", "martes", index)
-                      }
-                    >
-                      {horas.map((horaFin, indexHoras) => {
-                        const endHour = Number(horaFin.replace(":", ""));
-                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                        const isDisabled = endHour <= startHour;
-
-                        if(!isDisabled){
-                          return (
-                            <option
-                              key={indexHoras}
-                              value={horaFin}
-                              selected={horaFin === intervalo.split("-")[1]}
-                            >
-                              {horaFin}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="trash">
-                    <ion-icon
-                      name="trash"
-                      onClick={(e) => handleRemoveSchedule(e, "martes", index)}
-                    ></ion-icon>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <span>No seleccionado</span>
-            )}
-          </div>
+          {daySchedule("martes")}
         </div>
+
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -552,81 +464,9 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
               <ion-icon name="copy"></ion-icon>
             </div>
           </div>
-          <div className="column-schedule">
-            {form.horarios.miercoles.isChecked ? (
-              form.horarios.miercoles?.schedule?.map((intervalo, index) => (
-                <div key={index} id={index}>
-                  <div className="div-schedule">
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "inicio", "miercoles", index)
-                      }
-                    >
-                      {horas.map((horaInicio, indexHoras) => {
-                        const startHour = Number(horaInicio.replace(":", ""));
-                        const prevEndHour = Number(
-                          form.horarios.miercoles?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                        );
-                        const currentEndHour = Number(
-                          form.horarios.miercoles?.schedule[index]?.split("-")[1].replace(":", "")
-                        );
-                        const isDisabled =
-                          startHour <= prevEndHour ||
-                          (startHour >= currentEndHour && currentEndHour !== 0);
-
-                        if (!isDisabled) {
-                          return (
-                            <option key={indexHoras} value={horaInicio}>
-                              {horaInicio}
-                            </option>
-                          );
-                        }
-
-                        return null; // Don't render the option
-                      })}
-                    </select>
-                    <p>-</p>
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "fin", "miercoles", index)
-                      }
-                    >
-                      {horas.map((horaFin, indexHoras) => {
-                        const endHour = Number(horaFin.replace(":", ""));
-                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                        const isDisabled = endHour <= startHour;
-
-                        if(!isDisabled){
-                          return (
-                            <option
-                              key={indexHoras}
-                              value={horaFin}
-                              selected={horaFin === intervalo.split("-")[1]}
-                            >
-                              {horaFin}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="trash">
-                    <ion-icon
-                      name="trash"
-                      onClick={(e) =>
-                        handleRemoveSchedule(e, "miercoles", index)
-                      }
-                    ></ion-icon>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <span>No seleccionado</span>
-            )}
-          </div>
+          {daySchedule("miercoles")}
         </div>
+
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -647,79 +487,9 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
               <ion-icon name="copy"></ion-icon>
             </div>
           </div>
-          <div className="column-schedule">
-            {form.horarios.jueves.isChecked ? (
-              form.horarios.jueves?.schedule?.map((intervalo, index) => (
-                <div key={index} id={index}>
-                  <div className="div-schedule">
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "inicio", "jueves", index)
-                      }
-                    >
-                      {horas.map((horaInicio, indexHoras) => {
-                        const startHour = Number(horaInicio.replace(":", ""));
-                        const prevEndHour = Number(
-                          form.horarios.jueves?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                        );
-                        const currentEndHour = Number(
-                          form.horarios.jueves?.schedule[index]?.split("-")[1].replace(":", "")
-                        );
-                        const isDisabled =
-                          startHour <= prevEndHour ||
-                          (startHour >= currentEndHour && currentEndHour !== 0);
-
-                        if (!isDisabled) {
-                          return (
-                            <option key={indexHoras} value={horaInicio}>
-                              {horaInicio}
-                            </option>
-                          );
-                        }
-
-                        return null; // Don't render the option
-                      })}
-                    </select>
-                    <p>-</p>
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "fin", "jueves", index)
-                      }
-                    >
-                      {horas.map((horaFin, indexHoras) => {
-                        const endHour = Number(horaFin.replace(":", ""));
-                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                        const isDisabled = endHour <= startHour;
-
-                        if(!isDisabled){
-                          return (
-                            <option
-                              key={indexHoras}
-                              value={horaFin}
-                              selected={horaFin === intervalo.split("-")[1]}
-                            >
-                              {horaFin}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="trash">
-                    <ion-icon
-                      name="trash"
-                      onClick={(e) => handleRemoveSchedule(e, "jueves", index)}
-                    ></ion-icon>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <span>No seleccionado</span>
-            )}
-          </div>
+          {daySchedule("jueves")}
         </div>
+
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -740,79 +510,9 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
               <ion-icon name="copy"></ion-icon>
             </div>
           </div>
-          <div className="column-schedule">
-            {form.horarios.viernes.isChecked ? (
-              form.horarios.viernes?.schedule?.map((intervalo, index) => (
-                <div key={index} id={index}>
-                  <div className="div-schedule">
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "inicio", "viernes", index)
-                      }
-                    >
-                      {horas.map((horaInicio, indexHoras) => {
-                        const startHour = Number(horaInicio.replace(":", ""));
-                        const prevEndHour = Number(
-                          form.horarios.viernes?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                        );
-                        const currentEndHour = Number(
-                          form.horarios.viernes?.schedule[index]?.split("-")[1].replace(":", "")
-                        );
-                        const isDisabled =
-                          startHour <= prevEndHour ||
-                          (startHour >= currentEndHour && currentEndHour !== 0);
-
-                        if (!isDisabled) {
-                          return (
-                            <option key={indexHoras} value={horaInicio}>
-                              {horaInicio}
-                            </option>
-                          );
-                        }
-
-                        return null; // Don't render the option
-                    })}
-                    </select>
-                    <p>-</p>
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "fin", "viernes", index)
-                      }
-                    >
-                      {horas.map((horaFin, indexHoras) => {
-                        const endHour = Number(horaFin.replace(":", ""));
-                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                        const isDisabled = endHour <= startHour;
-
-                        if(!isDisabled){
-                          return (
-                            <option
-                              key={indexHoras}
-                              value={horaFin}
-                              selected={horaFin === intervalo.split("-")[1]}
-                            >
-                              {horaFin}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="trash">
-                    <ion-icon
-                      name="trash"
-                      onClick={(e) => handleRemoveSchedule(e, "viernes", index)}
-                    ></ion-icon>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <span>No seleccionado</span>
-            )}
-          </div>
+          {daySchedule("viernes")}
         </div>
+
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -833,78 +533,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
               <ion-icon name="copy"></ion-icon>
             </div>
           </div>
-          <div className="column-schedule">
-            {form.horarios.sabado.isChecked ? (
-              form.horarios.sabado?.schedule?.map((intervalo, index) => (
-                <div key={index} id={index}>
-                  <div className="div-schedule">
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "inicio", "sabado", index)
-                      }
-                    >
-                      {horas.map((horaInicio, indexHoras) => {
-                        const startHour = Number(horaInicio.replace(":", ""));
-                        const prevEndHour = Number(
-                          form.horarios.sabado?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                        );
-                        const currentEndHour = Number(
-                          form.horarios.sabado?.schedule[index]?.split("-")[1].replace(":", "")
-                        );
-                        const isDisabled =
-                          startHour <= prevEndHour ||
-                          (startHour >= currentEndHour && currentEndHour !== 0);
-
-                        if (!isDisabled) {
-                          return (
-                            <option key={indexHoras} value={horaInicio}>
-                              {horaInicio}
-                            </option>
-                          );
-                        }
-
-                        return null; // Don't render the option
-                    })}
-                    </select>
-                    <p>-</p>
-                    <select
-                      onChange={(e) =>
-                        handleSelectChange(e, "fin", "sabado", index)
-                      }
-                    >
-                      {horas.map((horaFin, indexHoras) => {
-                        const endHour = Number(horaFin.replace(":", ""));
-                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                        const isDisabled = endHour <= startHour;
-
-                        if(!isDisabled){
-                          return (
-                            <option
-                              key={indexHoras}
-                              value={horaFin}
-                              selected={horaFin === intervalo.split("-")[1]}
-                            >
-                              {horaFin}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="trash">
-                    <ion-icon
-                      name="trash"
-                      onClick={(e) => handleRemoveSchedule(e, "sabado", index)}
-                    ></ion-icon>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <span>No seleccionado</span>
-            )}
-          </div>
+          {daySchedule("sabado")}
         </div>
       </section>
     </div>

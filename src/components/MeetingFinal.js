@@ -77,9 +77,9 @@ const WeekTable = () => {
           {Object.keys(slots.domingo).map((time, i) => (
             <tr style={{ fontSize: "2vw" }} key={i}>
               {time % 60 === 0 ? (
-                <td className="empty-cell">{`${time / 60}:00 `}</td>
+                <td className="empty-cell hours-cell">{`${time / 60}:00 `}</td>
               ) : (
-                <td className="empty-cell"></td>
+                <td className="empty-cell hours-cell"></td>
               )}
               {Object.values(slots).map((day, j) => (
                 <td
