@@ -80,7 +80,7 @@ const UserInMeeting = () => {
   //cada vez que form cambia, el Form Global se actualiza
   useEffect(() => {
     setFormG(form);
-    console.log(form);
+    console.log(form)
   }, [form]);
 
   /*la primera vez que el componente carga, 
@@ -93,9 +93,9 @@ const UserInMeeting = () => {
 
   //esta funcion actualiza el horario segun los cambios del componente SelectAvailableHours
   const setFormSchedule = (schedule) => {
-    console.log(form);
     setForm({ ...form, horarios: schedule });
   };
+
   const handleSubmit = async () => {
     const newNameUser = name;
     console.log(newNameUser);
@@ -131,7 +131,7 @@ const UserInMeeting = () => {
         {
           meetingId: token,
           userName: name,
-          schedule: proposedHours,
+          availableHours: proposedHours,
         }
       );
       console.log(res);
