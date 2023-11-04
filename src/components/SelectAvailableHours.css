@@ -162,6 +162,14 @@
   margin-right: 1rem;
   margin-left: 1rem;
 }
+
+.Schedules-Form select option[disabled] {
+  /* Add your styling here */
+  color: #dddddd; /* Change text color to gray, for example */
+  background-color: #636363; /* Change background color to a light gray */
+  font-style: italic; /* Make the text italic, for example */
+  /* Add any other CSS properties you want to apply to the disabled option */
+}
 .column-schedule .trash {
   width: 25%;
   display: flex;

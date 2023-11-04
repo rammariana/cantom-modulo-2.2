@@ -35,6 +35,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       },
     },
   });
+
   const horas = [
     "00:00",
     "00:15",
@@ -133,7 +134,8 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
     "23:30",
     "23:45",
   ];
-  const [selectInicio, setSelectInicio] = useState(0);
+
+
   useEffect(() => {
     console.log(form);
     setFormScheduleParentComponent(form.horarios);
@@ -209,39 +211,29 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       const inicioIntervalo = updatedSchedule[index].split("-")[0];
       const finIntervalo = updatedSchedule[index].split("-")[1];
       let updatedInterval;
-
+  
       if (type === "inicio") {
-        setSelectInicio(selectedValue);
-        console.log(selectInicio);
-
 
         updatedInterval = selectedValue + "-" + finIntervalo;
-        console.log(updatedHorarios[dia]);
 
-        if (index > 0) {
-          const intervaloInicioActual = updatedSchedule[index]
-            .split("-")[0]
-            .replace(":", "");
+        /*if (index > 0) {
           const intervaloFinalAnterior = updatedSchedule[index - 1]
             .split("-")[1]
             .replace(":", "");
-          console.log(intervaloInicioActual, intervaloFinalAnterior);
-          if (Number(intervaloInicioActual) < Number(intervaloFinalAnterior)) {
-            console.error("solapado");
+
+          if (Number(selectedValue.replace(":", "")) < Number(intervaloFinalAnterior)) {
+            console.log('horario sobrepuestos')
+            return;
           }
-        }
+        } */
       } else if (type === "fin") {
         updatedInterval = inicioIntervalo + "-" + selectedValue;
 
-        if (
-          Number(selectInicio.replace(":", "")) >
-          Number(e.target.value.replace(":", ""))
-        ) {
-          console.error("error intervalos");
-          e.target.value = "00:00";
-          return prevForm;
-        }
-      }
+        /*if ( Number(selectedValue.replace(":", "")) < Number(inicioIntervalo.replace(":", ""))) {
+          console.log('horario invalido')
+          return;
+        }*/
+      } 
 
       updatedSchedule[index] = updatedInterval;
       updatedHorarios[dia] = {
@@ -255,9 +247,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       };
     });
   };
-  useEffect(() => {
-    console.log(selectInicio);
-  }, [selectInicio]);
+
   return (
     <div className="Schedules-Form">
       <section className="schedules-container">
@@ -291,15 +281,29 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "inicio", "domingo", index)
                       }
                     >
-                      {horas.map((horaInicio, index) => (
-                        <option
-                          key={index}
-                          value={horaInicio}
-                          selected={horaInicio === intervalo.split("-")[0]}
-                        >
-                          {horaInicio}
-                        </option>
-                      ))}
+                      {horas.map((horaInicio, indexHoras) => {
+                        const startHour = Number(horaInicio.replace(":", ""));
+                        const prevEndHour = Number(
+                          form.horarios.domingo?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                        );
+                        const currentEndHour = Number(
+                          form.horarios.domingo?.schedule[index]?.split("-")[1].replace(":", "")
+                        );
+                        const isDisabled =
+                          startHour <= prevEndHour ||
+                          (startHour >= currentEndHour && currentEndHour !== 0);
+
+                        if (!isDisabled) {
+                          return (
+                            <option key={indexHoras} value={horaInicio}>
+                              {horaInicio}
+                            </option>
+                          );
+                        }
+
+                        return null; // Don't render the option
+                    })}
+
                     </select>
                     <p>-</p>
                     <select
@@ -307,15 +311,25 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "fin", "domingo", index)
                       }
                     >
-                      {horas.map((horaFin, index) => (
-                        <option
-                          key={index}
-                          value={horaFin}
-                          selected={horaFin === intervalo.split("-")[1]}
-                        >
-                          {horaFin}
-                        </option>
-                      ))}
+                      {horas.map((horaFin, indexHoras) => {
+                        const endHour = Number(horaFin.replace(":", ""));
+                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                        const isDisabled = endHour <= startHour;
+
+                        if(!isDisabled){
+                          return (
+                            <option
+                              key={indexHoras}
+                              value={horaFin}
+                              selected={horaFin === intervalo.split("-")[1]}
+                            >
+                              {horaFin}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
+
                     </select>
                   </div>
 
@@ -362,15 +376,28 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "inicio", "lunes", index)
                       }
                     >
-                      {horas.map((horaInicio, index) => (
-                        <option
-                          key={index}
-                          value={horaInicio}
-                          selected={horaInicio === intervalo.split("-")[0]}
-                        >
-                          {horaInicio}
-                        </option>
-                      ))}
+                      {horas.map((horaInicio, indexHoras) => {
+                        const startHour = Number(horaInicio.replace(":", ""));
+                        const prevEndHour = Number(
+                          form.horarios.lunes?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                        );
+                        const currentEndHour = Number(
+                          form.horarios.lunes?.schedule[index]?.split("-")[1].replace(":", "")
+                        );
+                        const isDisabled =
+                          startHour <= prevEndHour ||
+                          (startHour >= currentEndHour && currentEndHour !== 0);
+
+                        if (!isDisabled) {
+                          return (
+                            <option key={indexHoras} value={horaInicio}>
+                              {horaInicio}
+                            </option>
+                          );
+                        }
+
+                        return null; // Don't render the option
+                    })}
                     </select>
                     <p>-</p>
                     <select
@@ -378,15 +405,24 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "fin", "lunes", index)
                       }
                     >
-                      {horas.map((horaFin, index) => (
-                        <option
-                          key={index}
-                          value={horaFin}
-                          selected={horaFin === intervalo.split("-")[1]}
-                        >
-                          {horaFin}
-                        </option>
-                      ))}
+                      {horas.map((horaFin, indexHoras) => {
+                        const endHour = Number(horaFin.replace(":", ""));
+                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                        const isDisabled = endHour <= startHour;
+
+                        if(!isDisabled){
+                          return (
+                            <option
+                              key={indexHoras}
+                              value={horaFin}
+                              selected={horaFin === intervalo.split("-")[1]}
+                            >
+                              {horaFin}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                     </select>
                   </div>
 
@@ -433,15 +469,28 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "inicio", "martes", index)
                       }
                     >
-                      {horas.map((horaInicio, index) => (
-                        <option
-                          key={index}
-                          value={horaInicio}
-                          selected={horaInicio === intervalo.split("-")[0]}
-                        >
-                          {horaInicio}
-                        </option>
-                      ))}
+                      {horas.map((horaInicio, indexHoras) => {
+                        const startHour = Number(horaInicio.replace(":", ""));
+                        const prevEndHour = Number(
+                          form.horarios.martes?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                        );
+                        const currentEndHour = Number(
+                          form.horarios.martes?.schedule[index]?.split("-")[1].replace(":", "")
+                        );
+                        const isDisabled =
+                          startHour <= prevEndHour ||
+                          (startHour >= currentEndHour && currentEndHour !== 0);
+
+                        if (!isDisabled) {
+                          return (
+                            <option key={indexHoras} value={horaInicio}>
+                              {horaInicio}
+                            </option>
+                          );
+                        }
+
+                        return null; // Don't render the option
+                      })}
                     </select>
                     <p>-</p>
                     <select
@@ -449,15 +498,24 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "fin", "martes", index)
                       }
                     >
-                      {horas.map((horaFin, index) => (
-                        <option
-                          key={index}
-                          value={horaFin}
-                          selected={horaFin === intervalo.split("-")[1]}
-                        >
-                          {horaFin}
-                        </option>
-                      ))}
+                      {horas.map((horaFin, indexHoras) => {
+                        const endHour = Number(horaFin.replace(":", ""));
+                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                        const isDisabled = endHour <= startHour;
+
+                        if(!isDisabled){
+                          return (
+                            <option
+                              key={indexHoras}
+                              value={horaFin}
+                              selected={horaFin === intervalo.split("-")[1]}
+                            >
+                              {horaFin}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                     </select>
                   </div>
 
@@ -504,15 +562,28 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "inicio", "miercoles", index)
                       }
                     >
-                      {horas.map((horaInicio, index) => (
-                        <option
-                          key={index}
-                          value={horaInicio}
-                          selected={horaInicio === intervalo.split("-")[0]}
-                        >
-                          {horaInicio}
-                        </option>
-                      ))}
+                      {horas.map((horaInicio, indexHoras) => {
+                        const startHour = Number(horaInicio.replace(":", ""));
+                        const prevEndHour = Number(
+                          form.horarios.miercoles?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                        );
+                        const currentEndHour = Number(
+                          form.horarios.miercoles?.schedule[index]?.split("-")[1].replace(":", "")
+                        );
+                        const isDisabled =
+                          startHour <= prevEndHour ||
+                          (startHour >= currentEndHour && currentEndHour !== 0);
+
+                        if (!isDisabled) {
+                          return (
+                            <option key={indexHoras} value={horaInicio}>
+                              {horaInicio}
+                            </option>
+                          );
+                        }
+
+                        return null; // Don't render the option
+                      })}
                     </select>
                     <p>-</p>
                     <select
@@ -520,15 +591,24 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "fin", "miercoles", index)
                       }
                     >
-                      {horas.map((horaFin, index) => (
-                        <option
-                          key={index}
-                          value={horaFin}
-                          selected={horaFin === intervalo.split("-")[1]}
-                        >
-                          {horaFin}
-                        </option>
-                      ))}
+                      {horas.map((horaFin, indexHoras) => {
+                        const endHour = Number(horaFin.replace(":", ""));
+                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                        const isDisabled = endHour <= startHour;
+
+                        if(!isDisabled){
+                          return (
+                            <option
+                              key={indexHoras}
+                              value={horaFin}
+                              selected={horaFin === intervalo.split("-")[1]}
+                            >
+                              {horaFin}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                     </select>
                   </div>
 
@@ -577,15 +657,28 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "inicio", "jueves", index)
                       }
                     >
-                      {horas.map((horaInicio, index) => (
-                        <option
-                          key={index}
-                          value={horaInicio}
-                          selected={horaInicio === intervalo.split("-")[0]}
-                        >
-                          {horaInicio}
-                        </option>
-                      ))}
+                      {horas.map((horaInicio, indexHoras) => {
+                        const startHour = Number(horaInicio.replace(":", ""));
+                        const prevEndHour = Number(
+                          form.horarios.jueves?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                        );
+                        const currentEndHour = Number(
+                          form.horarios.jueves?.schedule[index]?.split("-")[1].replace(":", "")
+                        );
+                        const isDisabled =
+                          startHour <= prevEndHour ||
+                          (startHour >= currentEndHour && currentEndHour !== 0);
+
+                        if (!isDisabled) {
+                          return (
+                            <option key={indexHoras} value={horaInicio}>
+                              {horaInicio}
+                            </option>
+                          );
+                        }
+
+                        return null; // Don't render the option
+                      })}
                     </select>
                     <p>-</p>
                     <select
@@ -593,15 +686,24 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "fin", "jueves", index)
                       }
                     >
-                      {horas.map((horaFin, index) => (
-                        <option
-                          key={index}
-                          value={horaFin}
-                          selected={horaFin === intervalo.split("-")[1]}
-                        >
-                          {horaFin}
-                        </option>
-                      ))}
+                      {horas.map((horaFin, indexHoras) => {
+                        const endHour = Number(horaFin.replace(":", ""));
+                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                        const isDisabled = endHour <= startHour;
+
+                        if(!isDisabled){
+                          return (
+                            <option
+                              key={indexHoras}
+                              value={horaFin}
+                              selected={horaFin === intervalo.split("-")[1]}
+                            >
+                              {horaFin}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                     </select>
                   </div>
 
@@ -648,15 +750,28 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "inicio", "viernes", index)
                       }
                     >
-                      {horas.map((horaInicio, index) => (
-                        <option
-                          key={index}
-                          value={horaInicio}
-                          selected={horaInicio === intervalo.split("-")[0]}
-                        >
-                          {horaInicio}
-                        </option>
-                      ))}
+                      {horas.map((horaInicio, indexHoras) => {
+                        const startHour = Number(horaInicio.replace(":", ""));
+                        const prevEndHour = Number(
+                          form.horarios.viernes?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                        );
+                        const currentEndHour = Number(
+                          form.horarios.viernes?.schedule[index]?.split("-")[1].replace(":", "")
+                        );
+                        const isDisabled =
+                          startHour <= prevEndHour ||
+                          (startHour >= currentEndHour && currentEndHour !== 0);
+
+                        if (!isDisabled) {
+                          return (
+                            <option key={indexHoras} value={horaInicio}>
+                              {horaInicio}
+                            </option>
+                          );
+                        }
+
+                        return null; // Don't render the option
+                    })}
                     </select>
                     <p>-</p>
                     <select
@@ -664,15 +779,24 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "fin", "viernes", index)
                       }
                     >
-                      {horas.map((horaFin, index) => (
-                        <option
-                          key={index}
-                          value={horaFin}
-                          selected={horaFin === intervalo.split("-")[1]}
-                        >
-                          {horaFin}
-                        </option>
-                      ))}
+                      {horas.map((horaFin, indexHoras) => {
+                        const endHour = Number(horaFin.replace(":", ""));
+                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                        const isDisabled = endHour <= startHour;
+
+                        if(!isDisabled){
+                          return (
+                            <option
+                              key={indexHoras}
+                              value={horaFin}
+                              selected={horaFin === intervalo.split("-")[1]}
+                            >
+                              {horaFin}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                     </select>
                   </div>
 
@@ -719,15 +843,28 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "inicio", "sabado", index)
                       }
                     >
-                      {horas.map((horaInicio, index) => (
-                        <option
-                          key={index}
-                          value={horaInicio}
-                          selected={horaInicio === intervalo.split("-")[0]}
-                        >
-                          {horaInicio}
-                        </option>
-                      ))}
+                      {horas.map((horaInicio, indexHoras) => {
+                        const startHour = Number(horaInicio.replace(":", ""));
+                        const prevEndHour = Number(
+                          form.horarios.sabado?.schedule[index - 1]?.split("-")[1].replace(":", "")
+                        );
+                        const currentEndHour = Number(
+                          form.horarios.sabado?.schedule[index]?.split("-")[1].replace(":", "")
+                        );
+                        const isDisabled =
+                          startHour <= prevEndHour ||
+                          (startHour >= currentEndHour && currentEndHour !== 0);
+
+                        if (!isDisabled) {
+                          return (
+                            <option key={indexHoras} value={horaInicio}>
+                              {horaInicio}
+                            </option>
+                          );
+                        }
+
+                        return null; // Don't render the option
+                    })}
                     </select>
                     <p>-</p>
                     <select
@@ -735,15 +872,24 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
                         handleSelectChange(e, "fin", "sabado", index)
                       }
                     >
-                      {horas.map((horaFin, index) => (
-                        <option
-                          key={index}
-                          value={horaFin}
-                          selected={horaFin === intervalo.split("-")[1]}
-                        >
-                          {horaFin}
-                        </option>
-                      ))}
+                      {horas.map((horaFin, indexHoras) => {
+                        const endHour = Number(horaFin.replace(":", ""));
+                        const startHour = Number(intervalo.split("-")[0].replace(":", ""));
+                        const isDisabled = endHour <= startHour;
+
+                        if(!isDisabled){
+                          return (
+                            <option
+                              key={indexHoras}
+                              value={horaFin}
+                              selected={horaFin === intervalo.split("-")[1]}
+                            >
+                              {horaFin}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                     </select>
                   </div>
 
