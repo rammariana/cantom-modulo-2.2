@@ -57,8 +57,9 @@ background: #222222; icono basura y mas
   display: flex;
   gap: 0.5rem;
 }
-.token-container p{
+.token-container button{
   color: var(--color-link-login-signup-btn);
+  background-color: transparent;
   text-decoration: none;
   cursor: pointer;
 }

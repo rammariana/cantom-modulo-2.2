@@ -33,7 +33,7 @@
   margin: 1rem 0;
 }
 .meeting-container .copy-link {
-  max-width: 40%;
+  max-width: 50%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -51,8 +51,20 @@
 .meeting-container span {
   color: rgb(47, 138, 47);
   font-size: 1.2rem;
-  text-shadow: 1px 1px 6px rgba(100, 93, 93, 0.507);
+  text-shadow: 1px 1px 6px rgba(100, 93, 93, 0.59);
   transition: desplazar 1s ease-in-out;
+}
+.meeting-container .copy-container {
+  position: relative;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.meeting-container .copied {
+  top: -1rem;
+  position: absolute;
 }
 .meeting-container section {
   display: flex;

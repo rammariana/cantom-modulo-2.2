@@ -47,6 +47,7 @@ const CreateMeeting = () => {
   });
 
   let [error, setError] = useState("");
+  let [creando, setCreando] = useState("");
 
   const hours = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
 
@@ -180,6 +181,8 @@ const CreateMeeting = () => {
 
   const handleSubmit = async (e, form) => {
     e.preventDefault();
+    setCreando("Creando...");
+
     if (form.duracion !== "" && form.nombre !== "" && form.cantidad !== "") {
       //convertir horarios a formato 'L-600-720'
       function getMinutesFromTime(time) {
@@ -208,22 +211,32 @@ const CreateMeeting = () => {
       console.log(convertIntervalsToMinutes(form.horarios));
       const proposedHours = convertIntervalsToMinutes(form.horarios);
 
-      const res = await axios.post(
-        "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-meeting",
-        {
-          lengthMeeting: form.cantidad,
-          expirationDate: form.duracion,
-          adminName: form.nombre,
-          eventName: form.evento,
-          adminHours: proposedHours,
+      try {
+        const res = await axios.post(
+          "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-meeting",
+          {
+            lengthMeeting: form.cantidad,
+            expirationDate: form.duracion,
+            adminName: form.nombre,
+            eventName: form.evento,
+            adminHours: proposedHours,
+          }
+        );
+        const idMeeting = res.data.meetingId;
+        setIdGlobal(form, idMeeting);
+        if (res.status === 200) {
+          setCreando("");
         }
-      );
-      const idMeeting = res.data.meetingId;
-      setIdGlobal(form, idMeeting);
-      //console.log(form);
-      //console.log(res.data.meetingId);
+        //console.log(form);
+        //console.log(res.data.meetingId);
+      } catch (err) {
+        console.log(err);
+        setCreando("");
+        setError("Ocurrió un error");
+      }
     } else {
       setError("Necesitas completar todos los campos");
+      setCreando("");
       setTimeout(() => {
         setError("");
       }, 2000);
@@ -306,6 +319,7 @@ const CreateMeeting = () => {
           setFormScheduleParentComponent={setFormSchedule}
         />
         {/*Aqui acaba la seccion calendario*/}
+        <span>{creando}</span>
         <span style={{ color: "red" }}>{error}</span>
         <button onClick={(e) => handleSubmit(e, form)}>Crear</button>
       </form>

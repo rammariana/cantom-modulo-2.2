@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./SelectAvailableHours.css";
+//import { UserDataContext } from "./UserDataContext";
+//import { useNavigate } from "react-router-dom";
+//import axios from "axios";
 
 const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
   const [form, setForm] = useState({
@@ -135,9 +138,8 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
     "23:45",
   ];
 
-
   useEffect(() => {
-    console.log(form);
+    console.log(form.horarios);
     setFormScheduleParentComponent(form.horarios);
   }, [form]);
 
@@ -160,6 +162,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
         isChecked: !form.horarios[e.target.name]?.isChecked,
       },
     };
+    console.log("nuevo", newHorarios);
     //se sobreescribe el form
     setForm({
       ...form,
@@ -169,12 +172,12 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
   //agrega un intervalo de horas vacio (00:00 - 00:00)
   const handleAddSchedule = (e, dia) => {
     console.log(dia, form);
-  
+
     let newSchedule;
     const currentSchedule = form.horarios[dia].schedule;
-  
+
     if (currentSchedule.length === 0) {
-      newSchedule = "00:00-00:15";
+      newSchedule = "00:00-23:45";
     } else {
       const lastInterval = currentSchedule[currentSchedule.length - 1];
       const [begin, end] = lastInterval.split("-");
@@ -183,8 +186,8 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       let beginMinNew = Number(endMin) + 15;
       let endHourNew = Number(end.split(":")[0]);
       let endMinNew = Number(endMin) + 30;
+      console.log(currentSchedule);
 
-  
       if (beginMinNew >= 60) {
         beginMinNew -= 60;
         beginHourNew += 1;
@@ -194,22 +197,24 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
         endMinNew -= 60;
         endHourNew += 1;
       }
-  
+
       if (endHourNew >= 24) {
         return; // Don't add intervals past 23:45
       }
 
-      if(beginMinNew==0){beginMinNew="00"}
-  
+      if (beginMinNew == 0) {
+        beginMinNew = "00";
+      }
+
       if (beginHourNew < 10) {
         newSchedule = `0${beginHourNew}:${beginMinNew}-${endHourNew}:${endMinNew}`;
-      } else if (endHourNew<10){
+      } else if (endHourNew < 10) {
         newSchedule = `0${beginHourNew}:${beginMinNew}-0${endHourNew}:${endMinNew}`;
-      } else{
-        newSchedule = `${beginHourNew}:${beginMinNew}-${endHourNew}:${endMinNew}`
+      } else {
+        newSchedule = `${beginHourNew}:${beginMinNew}-${endHourNew}:${endMinNew}`;
       }
     }
-  
+
     setForm({
       ...form,
       horarios: {
@@ -221,7 +226,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       },
     });
   };
-  
+
   const handleRemoveSchedule = (e, dia, indexToRemove) => {
     setForm((prevForm) => {
       const updatedHorarios = { ...prevForm.horarios };
@@ -250,9 +255,8 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       const inicioIntervalo = updatedSchedule[index].split("-")[0];
       const finIntervalo = updatedSchedule[index].split("-")[1];
       let updatedInterval;
-  
-      if (type === "inicio") {
 
+      if (type === "inicio") {
         updatedInterval = selectedValue + "-" + finIntervalo;
 
         /*if (index > 0) {
@@ -272,8 +276,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
           console.log('horario invalido')
           return;
         }*/
-      } 
-
+      }
       updatedSchedule[index] = updatedInterval;
       updatedHorarios[dia] = {
         ...updatedHorarios[dia],
@@ -287,94 +290,98 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
     });
   };
 
- const daySchedule = (dia) =>{
-  return(
+  const daySchedule = (dia) => {
+    return (
       <div className="column-schedule">
-      {form.horarios[dia].isChecked ? (
-        form.horarios[dia]?.schedule?.map((intervalo, index) => (
-          <div key={index} id={index}>
-            <div className="div-schedule">
-              <select
-                onChange={(e) =>
-                  handleSelectChange(e, "inicio", dia, index)
-                }
-              >
-                {horas.map((horaInicio, indexHoras) => {
-                  const startHour = Number(horaInicio.replace(":", ""));
-                  const prevEndHour = Number(
-                    form.horarios[dia]?.schedule[index - 1]?.split("-")[1].replace(":", "")
-                  );
-                  const currentEndHour = Number(
-                    form.horarios[dia]?.schedule[index]?.split("-")[1].replace(":", "")
-                  );
-                  const isDisabled =
-                    startHour <= prevEndHour ||
-                    (startHour >= currentEndHour && currentEndHour !== 0);
-
-                  if (!isDisabled) {
-                    return (
-                      <option key={indexHoras} 
-                      value={horaInicio}
-                      selected={horaInicio === intervalo.split("-")[0]}
-                      >
-                        {horaInicio}
-                      </option>
+        {form.horarios[dia].isChecked ? (
+          form.horarios[dia]?.schedule?.map((intervalo, index) => (
+            <div key={index} id={index}>
+              <div className="div-schedule">
+                <select
+                  onChange={(e) => handleSelectChange(e, "inicio", dia, index)}
+                >
+                  {horas.map((horaInicio, indexHoras) => {
+                    const startHour = Number(horaInicio.replace(":", ""));
+                    const prevEndHour = Number(
+                      form.horarios[dia]?.schedule[index - 1]
+                        ?.split("-")[1]
+                        .replace(":", "")
                     );
-                  }
-
-                  return null; // Don't render the option
-              })}
-
-              </select>
-              <p>-</p>
-              <select
-                onChange={(e) =>
-                  handleSelectChange(e, "fin", dia, index)
-                }
-              >
-                {horas.map((horaFin, indexHoras) => {
-                  const endHour = Number(horaFin.replace(":", ""));
-                  const startHour = Number(intervalo.split("-")[0].replace(":", ""));
-                  const startHourNextIndex = Number(form.horarios[dia].schedule[index+1]?.split("-")[0].replace(":", ""))
-                  const isDisabled = endHour <= startHour || endHour >= startHourNextIndex;
-
-                  if(!isDisabled){
-                    return (
-                      <option
-                        key={indexHoras}
-                        value={horaFin}
-                        selected={horaFin === intervalo.split("-")[1]}
-                      >
-                        {horaFin}
-                      </option>
+                    const currentEndHour = Number(
+                      form.horarios[dia]?.schedule[index]
+                        ?.split("-")[1]
+                        .replace(":", "")
                     );
-                  }
-                  return null;
-                })}
+                    const isDisabled =
+                      startHour <= prevEndHour ||
+                      (startHour >= currentEndHour && currentEndHour !== 0);
 
-              </select>
+                    if (!isDisabled) {
+                      return (
+                        <option
+                          key={indexHoras}
+                          value={horaInicio}
+                          selected={horaInicio === intervalo.split("-")[0]}
+                        >
+                          {horaInicio}
+                        </option>
+                      );
+                    }
+
+                    return null; // Don't render the option
+                  })}
+                </select>
+                <p>-</p>
+                <select
+                  onChange={(e) => handleSelectChange(e, "fin", dia, index)}
+                >
+                  {horas.map((horaFin, indexHoras) => {
+                    const endHour = Number(horaFin.replace(":", ""));
+                    const startHour = Number(
+                      intervalo.split("-")[0].replace(":", "")
+                    );
+                    const startHourNextIndex = Number(
+                      form.horarios[dia].schedule[index + 1]
+                        ?.split("-")[0]
+                        .replace(":", "")
+                    );
+                    const isDisabled =
+                      endHour <= startHour || endHour >= startHourNextIndex;
+
+                    if (!isDisabled) {
+                      return (
+                        <option
+                          key={indexHoras}
+                          value={horaFin}
+                          selected={horaFin === intervalo.split("-")[1]}
+                        >
+                          {horaFin}
+                        </option>
+                      );
+                    }
+                    return null;
+                  })}
+                </select>
+              </div>
+
+              <div className="trash">
+                <ion-icon
+                  name="trash"
+                  onClick={(e) => handleRemoveSchedule(e, dia, index)}
+                ></ion-icon>
+              </div>
             </div>
-
-            <div className="trash">
-              <ion-icon
-                name="trash"
-                onClick={(e) => handleRemoveSchedule(e, dia, index)}
-              ></ion-icon>
-            </div>
-          </div>
-        ))
-      ) : (
-        <span>No seleccionado</span>
-      )}
-    </div>
-  )
- }
-
+          ))
+        ) : (
+          <span>No seleccionado</span>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="Schedules-Form">
       <section className="schedules-container">
-
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -397,7 +404,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
           </div>
           {daySchedule("domingo")}
         </div>
-
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -420,7 +426,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
           </div>
           {daySchedule("lunes")}
         </div>
-
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -443,7 +448,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
           </div>
           {daySchedule("martes")}
         </div>
-
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -466,7 +470,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
           </div>
           {daySchedule("miercoles")}
         </div>
-
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -489,7 +492,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
           </div>
           {daySchedule("jueves")}
         </div>
-
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
@@ -512,7 +514,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
           </div>
           {daySchedule("viernes")}
         </div>
-
         <div className="day">
           <div className="column-day">
             <div className="checkbox">
