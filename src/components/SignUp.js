@@ -42,9 +42,9 @@ const SignUp = () => {
     <div className="login-component">
       <h1>Crear cuenta</h1>
       <form onSubmit={handleSubmit}>
-        <label for="email">Correo electrónico</label>
+        <label htmlFor="email">Correo electrónico</label>
         <input type="email" name="email" placeholder="Email" />
-        <label for="password">Contraseña</label>
+        <label htmlFor="password">Contraseña</label>
         <div className="input-field">
           <input
             type={input}
