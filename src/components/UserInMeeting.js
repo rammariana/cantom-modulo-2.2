@@ -39,7 +39,7 @@ const UserInMeeting = () => {
      }
    }
    fetch();
- }, []);
+ }, [name, token]);
 
  const { formGlobal, setFormG } = useContext(UserDataContext);
  const [form, setForm] = useState({
@@ -97,9 +97,6 @@ const UserInMeeting = () => {
    if (Object.keys(formGlobal).length !== 0) {
      setForm(formGlobal);
      console.log("vacio", form);
-     for (let i = 0; i < form.horarios.length; i++) {
-       console.log(form.horarios[i]);
-     }
    }
  }, []);
 
@@ -110,7 +107,7 @@ const UserInMeeting = () => {
  };
 
  const handleSubmit = async () => {
-   const newNameUser = name;
+   //const newNameUser = name;
    //console.log(newNameUser);
 
    setDisabledBtn(true);

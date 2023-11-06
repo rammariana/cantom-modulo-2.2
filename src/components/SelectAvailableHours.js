@@ -180,8 +180,8 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       newSchedule = "00:00-23:45";
     } else {
       const lastInterval = currentSchedule[currentSchedule.length - 1];
-      const [begin, end] = lastInterval.split("-");
-      const [endHour, endMin] = end.split(":");
+      const [end] = lastInterval.split("-");
+      const [endMin] = end.split(":");
       let beginHourNew = Number(end.split(":")[0]);
       let beginMinNew = Number(endMin) + 15;
       let endHourNew = Number(end.split(":")[0]);
@@ -202,7 +202,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
         return; // Don't add intervals past 23:45
       }
 
-      if (beginMinNew == 0) {
+      if (beginMinNew === 0) {
         beginMinNew = "00";
       }
 

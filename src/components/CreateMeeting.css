@@ -19,6 +19,9 @@
   text-align: center;
   background-color: var(--color-primario);
 }
+.createmeeting-container form {
+  width: 100%;
+}
 .createmeeting-container form button {
   margin-bottom: 2rem;
 }
@@ -201,5 +204,9 @@ form .duration {
 @media screen and (min-width: 950px) {
   .createmeeting-container form button {
     width: 50%;
+  }
+  .createmeeting-container {
+    padding-left: 15rem;
+    padding-right: 15rem;
   }
 }

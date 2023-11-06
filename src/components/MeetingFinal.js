@@ -43,7 +43,7 @@ const WeekTable = () => {
   const getColor = (usersAvailable) => {
     const numberOfUsers = form.users?.length;
 
-    if (numberOfUsers == usersAvailable) {
+    if (numberOfUsers === usersAvailable) {
       return `rgb(134, 156, 255)`;
     } else {
       let intensity1 = 103 * (usersAvailable / numberOfUsers);
@@ -112,7 +112,7 @@ const WeekTable = () => {
 
 export default WeekTable;
 
-const userIntervals = [
+/*const userIntervals = [
   "domingo--0-60",
   "domingo--0-60",
   "domingo--0-60",
@@ -233,7 +233,7 @@ const userIntervals = [
   "jueves--1020-1080",
   "viernes--1020-1080",
   "sabado--1020-1080",
-];
+];*/
 
 let weekLapsesGlobalArray = {
   domingo: {

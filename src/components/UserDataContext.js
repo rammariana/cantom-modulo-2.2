@@ -9,9 +9,9 @@ export const UserDataProvider = ({ children }) => {
   let [id, setId] = useState("");
   let [name, setName] = useState("");
 
-  const [isChecked, setIsChecked] = useState([]); //dias con check
+  //const [isChecked, setIsChecked] = useState([]); //dias con check
   //const [myIndex, setMyIndex] = useState(0);
-  const [arrayHours, setArrayHours] = useState([]);
+  //const [arrayHours, setArrayHours] = useState([]);
   const [token, setToken] = useState("");
   const [nombre, setNombre] = useState("");
 
@@ -131,9 +131,9 @@ export const UserDataProvider = ({ children }) => {
     setNombre(e.target.value);
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log(arrayHours);
-  }, [arrayHours]);
+  }, [arrayHours]);*/
   useEffect(() => {
     console.log(token);
   }, [token]);
@@ -147,8 +147,8 @@ export const UserDataProvider = ({ children }) => {
     nombre,
     name,
     id,
-    arrayHours,
-    isChecked,
+    //arrayHours,
+    //isChecked,
     handleChange,
     token,
     setToken,
