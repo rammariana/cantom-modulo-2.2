@@ -8,7 +8,9 @@
   --color-blur-input: rgb(152, 186, 249);
   --color-placeholder: #908F8F;
   --color-span: #9874FF;
-  -color-icono: #222222;
+  --color-icono: #222222;
+  --color-error: rgb(223, 59, 59);
+  --color-exito: rgb(51, 209, 51); 
 }
 .createmeeting-container {
   min-height: 100vh;
@@ -117,6 +119,21 @@
   width: 100%;
   text-align: center;
   margin-top: 0.5rem;
+}
+.error .creando {
+  position: absolute;
+}
+.error {
+  color: var(--color-error);
+  text-shadow: 1px 1px 1px rgba(67, 57, 57, 0.577);
+}
+.creando {
+  color: var(--color-exito);
+  text-shadow: 1px 1px 1px rgba(67, 57, 57, 0.577);
+}
+.error-success-container {
+  position: relative;
+  width: 80%;
 }
 form .duration {
   width: 80%;
