@@ -32,8 +32,9 @@ const Header = () => {
         </div>
         {location.pathname === "/" && (
           <div className="login-container">
-            <Link to="/login">Log In</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/">Log In</Link>
+            <Link to="/">Sign Up</Link>
+            {/* las rutas son "/login" "/singup"*/}
           </div>
         )}
       </nav>
