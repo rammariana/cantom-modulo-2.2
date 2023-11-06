@@ -45,7 +45,7 @@ const MeetingId = () => {
   }, [id, meetingId]);
 
   const handleCopyLink = () => {
-    const linkToCopy = `https://whengomeetup.com/meeting-final/${meetingId}`;
+    const linkToCopy = `https://whentomeetup.com/meeting-final/${meetingId}`;
     try {
       navigator.clipboard.writeText(linkToCopy);
       setCopied(true);
