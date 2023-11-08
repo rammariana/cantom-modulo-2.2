@@ -174,7 +174,7 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
     const currentSchedule = form.horarios[dia].schedule;
   
     if (currentSchedule.length === 0) {
-      newSchedule = "00:00-00:15";
+      newSchedule = "00:00-23:45";
     } else {
       const lastInterval = currentSchedule[currentSchedule.length - 1];
       const [begin, end] = lastInterval.split("-");
