@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 //import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBr74MloFRx6Hdyo2DFpJ3MioKIlTBbmnk",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "auth-camtom.firebaseapp.com",
   projectId: "auth-camtom",
   storageBucket: "auth-camtom.appspot.com",
-  messagingSenderId: "239931022024",
-  appId: "1:239931022024:web:4c8a36a8ff79b78452e3fd",
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
 };
 
 const appFirebase = initializeApp(firebaseConfig);

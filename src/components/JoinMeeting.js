@@ -15,18 +15,20 @@ const JoinMeeting = () => {
     setInputName(e.target.value);
   };
   useEffect(() => {
-    console.log(inputName);
+    //console.log(inputName);
   }, [inputName]);
 
   const handleSubmit = async (e) => {
-    console.log(inputName);
+    //console.log(inputName);
 
     e.preventDefault();
     setNameGlobal(inputName);
+
     if (inputName && token) {
       navigate("/user-in-meeting");
     } else if (!token || token === undefined) {
       setMessage(`Necesitas el Id de la reunión\nVuelve al home`);
+
       setTimeout(() => {
         setMessage("");
       }, 1500);

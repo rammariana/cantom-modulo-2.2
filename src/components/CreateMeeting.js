@@ -5,9 +5,11 @@ import { useState } from "react";
 import axios from "axios";
 import "./CreateMeeting.css";
 import SelectAvailableHours from "./SelectAvailableHours";
+import { useNavigate } from "react-router-dom";
 
 const CreateMeeting = () => {
   //const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { setIdGlobal, formGlobal, setFormG } = useContext(UserDataContext);
   const [form, setForm] = useState({
     nombre: "",
@@ -45,10 +47,11 @@ const CreateMeeting = () => {
       },
     },
   });
-
+  const [disabledBtn, setDisabledBtn] = useState(true);
   let [error, setError] = useState("");
+  let [creando, setCreando] = useState("");
 
-  const hours = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+  const hours = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
 
   //ME TRAJE ESTO -------------------------------
   /*const horas = [
@@ -169,6 +172,10 @@ const CreateMeeting = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
+    if (Number(form.cantidad) > 0 && form.evento !== "" && form.nombre !== "") {
+      console.log(form);
+      setDisabledBtn(false);
+    }
     //console.log(form);
   };
 
@@ -180,6 +187,9 @@ const CreateMeeting = () => {
 
   const handleSubmit = async (e, form) => {
     e.preventDefault();
+    setCreando("Creando...");
+    setDisabledBtn(true);
+
     if (form.duracion !== "" && form.nombre !== "" && form.cantidad !== "") {
       //convertir horarios a formato 'L-600-720'
       function getMinutesFromTime(time) {
@@ -208,23 +218,41 @@ const CreateMeeting = () => {
       console.log(convertIntervalsToMinutes(form.horarios));
       const proposedHours = convertIntervalsToMinutes(form.horarios);
 
-      const res = await axios.post(
-        "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-meeting",
-        {
-          lengthMeeting: form.cantidad,
-          expirationDate: form.duracion,
-          adminName: form.nombre,
-          eventName: form.evento,
-          adminHours: proposedHours,
+      try {
+        const res = await axios.post(
+          "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-meeting",
+          {
+            lengthMeeting: form.cantidad,
+            expirationDate: form.duracion,
+            adminName: form.nombre,
+            eventName: form.evento,
+            adminHours: proposedHours,
+          }
+        );
+        const idMeeting = res.data.meetingId;
+        setIdGlobal(form, idMeeting);
+        if (res.status === 200) {
+          setCreando("");
+          navigate(`/meeting/${idMeeting}`);
+          //setDisabledBtn(false);
         }
-      );
-      const idMeeting = res.data.meetingId;
-      setIdGlobal(form, idMeeting);
-      //console.log(form);
-      //console.log(res.data.meetingId);
+        //console.log(form);
+        //console.log(res.data.meetingId);
+      } catch (err) {
+        console.log(err);
+        setCreando("");
+        setDisabledBtn(false);
+        setError("Ocurrió un error");
+        setTimeout(() => {
+          setError("");
+        }, 1500);
+      }
     } else {
       setError("Necesitas completar todos los campos");
+      setCreando("");
       setTimeout(() => {
+        disabledBtn(false);
+
         setError("");
       }, 2000);
       //console.log(setError);
@@ -306,8 +334,13 @@ const CreateMeeting = () => {
           setFormScheduleParentComponent={setFormSchedule}
         />
         {/*Aqui acaba la seccion calendario*/}
-        <span style={{ color: "red" }}>{error}</span>
-        <button onClick={(e) => handleSubmit(e, form)}>Crear</button>
+        <div className="error-success-container">
+          <span className="creando">{creando}</span>
+          <span className="error">{error}</span>
+        </div>
+        <button onClick={(e) => handleSubmit(e, form)} disabled={disabledBtn}>
+          Crear
+        </button>
       </form>
       {/*}
       {currentUser ? (
@@ -324,3 +357,4 @@ const CreateMeeting = () => {
 };
 
 export default CreateMeeting;
+/**/

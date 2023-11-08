@@ -107,6 +107,9 @@
 .form-desubicado p {
   text-align: center;
 }
+.form-desubicado input {
+  text-align: center;
+}
 .form-desubicado input::placeholder {
   text-align: center;
 }

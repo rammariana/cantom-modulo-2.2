@@ -14,6 +14,7 @@ const MeetingId = () => {
     cantidad: 0,
     evento: "",
   });
+  console.log(form);
   const params = useParams();
   const meetingId = params.id.replace(":", "");
   //console.log(params.id.replace(":", ""));
@@ -44,7 +45,7 @@ const MeetingId = () => {
   }, [id, meetingId]);
 
   const handleCopyLink = () => {
-    const linkToCopy = `https://whengomeetup.com/meeting-final/:${meetingId}`;
+    const linkToCopy = `https://whentomeetup.com/meeting-final/${meetingId}`;
     try {
       navigator.clipboard.writeText(linkToCopy);
       setCopied(true);
@@ -69,14 +70,16 @@ const MeetingId = () => {
         <small>
           Invita a tus amigos a unirse a tu evento usando este enlace:
         </small>
-        {copied && <span>copiado!</span>}
-        <button className="copy-link" onClick={handleCopyLink}>
-          {" "}
-          <span>
-            <ion-icon name="copy"></ion-icon>
-          </span>
-          Copy link
-        </button>
+        <div className="copy-container">
+          {copied && <span className="copied">copiado!</span>}
+          <button className="copy-link" onClick={handleCopyLink}>
+            {" "}
+            <span>
+              <ion-icon name="copy"></ion-icon>
+            </span>
+            Copy link
+          </button>
+        </div>
         {/*
         <p>Evento {form.evento}</p>
         <p>Duracion del evento: {form.cantidad} días</p>

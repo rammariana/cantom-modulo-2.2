@@ -13,13 +13,12 @@ const Home = () => {
   const { handleChange, token } = useContext(UserDataContext);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [disbledBtn, setDisabledBtn] = useState(false);
   //26IDIXU5
 
   const handleJoinMeeting = async () => {
     setMessage("Buscando reunión...");
-    setTimeout(() => {
-      setMessage("");
-    }, 1000);
+    setDisabledBtn(true);
     try {
       const res = await axios.get(
         `https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/get-meeting-info/${token}`
@@ -27,6 +26,10 @@ const Home = () => {
       console.log(res);
 
       if (res.status === 200) {
+        setTimeout(() => {
+          setMessage("");
+        }, 1000);
+
         navigate(`/join-meeting`);
       }
     } catch (err) {
@@ -34,6 +37,7 @@ const Home = () => {
         setMessage("Token no encontrado");
         setTimeout(() => {
           setMessage("");
+          setDisabledBtn(false);
         }, 1500);
       }
     }
@@ -58,7 +62,9 @@ const Home = () => {
           autoComplete="off"
         />
         <span>{message}</span>
-        <p onClick={handleJoinMeeting}>Unirme al evento</p>
+        <button disabled={disbledBtn} onClick={handleJoinMeeting}>
+          Unirme al evento
+        </button>
       </div>
       <Link to="/create-meeting">
         <button>Crear nuevo evento</button>

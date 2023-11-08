@@ -10,12 +10,12 @@ const WeekTable = () => {
   const [slots, setSlots] = useState(weekLapsesGlobalArray);
   const [form, setForm] = useState({});
   const { setToken, token } = useContext(UserDataContext);
+  const [usersInMeeting, setUsersInMeeting] = useState([]);
 
   const params = useParams();
-  const meetingId = params.meetingId;
   setToken(params.meetingId.replace(/:/, ""));
-  console.log(token);
-  console.log(form);
+  //console.log(token);
+  //console.log(form);
   useEffect(() => {
     async function fechData() {
       try {
@@ -27,10 +27,11 @@ const WeekTable = () => {
             },
           }
         );
+        const infoUsuarios = res.data.users;
+        const userNames = infoUsuarios.map((e) => e.userName);
+        setUsersInMeeting(userNames);
         setForm(res.data);
         setSlots(res.data.weeklyTable);
-        console.log(res.data);
-        console.log(res);
       } catch (err) {
         console.log(err);
       }
@@ -42,7 +43,7 @@ const WeekTable = () => {
   const getColor = (usersAvailable) => {
     const numberOfUsers = form.users?.length;
 
-    if (numberOfUsers == usersAvailable) {
+    if (numberOfUsers === usersAvailable) {
       return `rgb(134, 156, 255)`;
     } else {
       let intensity1 = 103 * (usersAvailable / numberOfUsers);
@@ -55,6 +56,15 @@ const WeekTable = () => {
     <div className="meeting-final-container">
       <h1>{form.eventName || "Evento " + form.meetingId}</h1>
       <p>Encuentra cuando pueden asistir todos los invitados a tu evento</p>
+
+      <section className="users-list">
+        <h5>Usuarios añadidos</h5>
+        <div className="list">
+          {usersInMeeting.map((e, index) => (
+            <p key={index}>{e[0].toUpperCase().concat(e.slice(1))}</p>
+          ))}
+        </div>
+      </section>
 
       <Link to="/join-meeting">
         <button>Unirme al evento</button>
@@ -102,7 +112,7 @@ const WeekTable = () => {
 
 export default WeekTable;
 
-const userIntervals = [
+/*const userIntervals = [
   "domingo--0-60",
   "domingo--0-60",
   "domingo--0-60",
@@ -223,7 +233,7 @@ const userIntervals = [
   "jueves--1020-1080",
   "viernes--1020-1080",
   "sabado--1020-1080",
-];
+];*/
 
 let weekLapsesGlobalArray = {
   domingo: {
