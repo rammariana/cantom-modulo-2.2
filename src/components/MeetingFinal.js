@@ -58,7 +58,9 @@ const WeekTable = () => {
       <p>Encuentra cuando pueden asistir todos los invitados a tu evento</p>
 
       <section className="users-list">
-        <h5>Usuarios añadidos</h5>
+        <br/>
+        <h5>Usuarios en el evento</h5>
+        <br/>
         <div className="list">
           {usersInMeeting.map((e, index) => (
             <p key={index}>{e[0].toUpperCase().concat(e.slice(1))}</p>
