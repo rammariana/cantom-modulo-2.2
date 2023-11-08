@@ -90,10 +90,9 @@
   }
 
   .no-decoration-button{
-      color: var(--color-link-login-signup-btn);
-      background-color: #d6deff;
-      text-decoration: none;
-      cursor: pointer;
+    background-color: transparent;
+    border: 2px solid var(--color-link-login-signup-btn);
+    color: var(--color-link-login-signup-btn);
   }
   
   @media screen and (min-width: 780px) {
