@@ -69,6 +69,9 @@ const WeekTable = () => {
       <Link to="/join-meeting">
         <button>Unirme al evento</button>
       </Link>
+      <Link to="/create-meeting">
+        <button className="no-decoration-button">Crear nuevo evento</button>
+      </Link>
 
       <table className="styled-table">
         <thead>

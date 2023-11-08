@@ -106,6 +106,33 @@ const UserInMeeting = () => {
    console.log(schedule);
  };
 
+ function validateFormUserInMeeting(formObject) {
+  let errorMessage = '';
+  let hasAtLeastOneItem = false;
+
+  for (const day in formObject.horarios) {
+
+      const dayInfo = formObject.horarios[day];
+
+      if (dayInfo.isChecked && dayInfo.schedule.length === 0) {
+        errorMessage = 'Agrega horarios a todos los días seleccionados'; 
+        setError(errorMessage);
+        console.log("hey")
+        return hasAtLeastOneItem = false;
+      }
+
+      if (dayInfo.schedule.length > 0) {
+        hasAtLeastOneItem = true;
+      }
+    }
+    if(hasAtLeastOneItem == false){
+      errorMessage = 'Ingresa al menos un horario disponible';
+      setError(errorMessage);
+      return hasAtLeastOneItem; 
+    }
+    return hasAtLeastOneItem;
+}
+
  const handleSubmit = async () => {
    //const newNameUser = name;
    //console.log(newNameUser);
@@ -113,55 +140,60 @@ const UserInMeeting = () => {
    setDisabledBtn(true);
    setBuscando("Uniendo...");
 
-   function getMinutesFromTime(time) {
-     const [hours, minutes] = time.split(":");
-     return parseInt(hours) * 60 + parseInt(minutes);
-   }
+   if(validateFormUserInMeeting(form)){
 
-   function convertIntervalsToMinutes(intervals) {
-     const tiempoPropuesto = [];
+    function getMinutesFromTime(time) {
+      const [hours, minutes] = time.split(":");
+      return parseInt(hours) * 60 + parseInt(minutes);
+    }
 
-     for (const day in intervals) {
-       const daySchedule = intervals[day].schedule.map((interval) => {
-         const [start, end] = interval.split("-");
-         const startMinutes = getMinutesFromTime(start);
-         const endMinutes = getMinutesFromTime(end);
-         return `${day}--${startMinutes}-${endMinutes}`;
-       });
+    function convertIntervalsToMinutes(intervals) {
+      const tiempoPropuesto = [];
 
-       tiempoPropuesto.push(...daySchedule);
-     }
+      for (const day in intervals) {
+        const daySchedule = intervals[day].schedule.map((interval) => {
+          const [start, end] = interval.split("-");
+          const startMinutes = getMinutesFromTime(start);
+          const endMinutes = getMinutesFromTime(end);
+          return `${day}--${startMinutes}-${endMinutes}`;
+        });
 
-     return tiempoPropuesto;
-   }
+        tiempoPropuesto.push(...daySchedule);
+      }
 
-   //CHECA EL OUPUT
-   console.log(convertIntervalsToMinutes(form.horarios));
-   const proposedHours = convertIntervalsToMinutes(form.horarios);
+      return tiempoPropuesto;
+    }
 
-   try {
-     const res = await axios.put(
-       "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-user-in-meeting",
-       {
-         meetingId: token,
-         userName: name,
-         availableHours: proposedHours,
-       }
-     );
-     if (res.status === 200) {
-       setBuscando("");
-     }
-     navigate(`/meeting-final/:${idReunion}`);
-     //console.log(res);
-   } catch (err) {
-     //console.log(err);
-     setDisabledBtn(false);
-     setBuscando("");
-     setError("Ocurrió un error");
-     setTimeout(() => {
-       setError("");
-     }, 1500);
-   }
+    //CHECA EL OUPUT
+    console.log(convertIntervalsToMinutes(form.horarios));
+    const proposedHours = convertIntervalsToMinutes(form.horarios);
+    try {
+      const res = await axios.put(
+        "https://camtomx-4c4e45a60b73.herokuapp.com/api/apps/w2m/new-user-in-meeting",
+        {
+          meetingId: token,
+          userName: name,
+          availableHours: proposedHours,
+        }
+      );
+      if (res.status === 200) {
+        setBuscando("");
+      }
+      navigate(`/meeting-final/:${idReunion}`);
+      //console.log(res);
+    } catch (err) {
+      //console.log(err);
+      setDisabledBtn(false);
+      setBuscando("");
+      setError("Ocurrió un error, intente más tarde");
+      setTimeout(() => {
+        setError("");
+      }, 1500);
+    }
+  }else{
+    setDisabledBtn(false);
+    setBuscando("");
+  }
  };
 
  const AddUserToMeeting = async (e) => {
@@ -205,7 +237,7 @@ const UserInMeeting = () => {
              El administrador del evento es <b>{admin}</b>
            </p>
            <p>
-             Evento programado para <b>{duracion}</b> días
+             Fecha límite del evento: <b>{duracion}</b> días
            </p>
            <p>
              Duración del evento: <b>{minutos}</b> minutos
@@ -251,4 +283,5 @@ const UserInMeeting = () => {
    </div>
  );
 };
+
 export default UserInMeeting;

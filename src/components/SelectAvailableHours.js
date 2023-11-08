@@ -139,7 +139,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
   ];
 
   useEffect(() => {
-    console.log(form.horarios);
     setFormScheduleParentComponent(form.horarios);
   }, [form]);
 
@@ -162,7 +161,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
         isChecked: !form.horarios[e.target.name]?.isChecked,
       },
     };
-    console.log("nuevo", newHorarios);
     //se sobreescribe el form
     setForm({
       ...form,
@@ -171,8 +169,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
   };
   //agrega un intervalo de horas vacio (00:00 - 00:00)
   const handleAddSchedule = (e, dia) => {
-    console.log(dia, form);
-
     let newSchedule;
     const currentSchedule = form.horarios[dia].schedule;
 
@@ -186,7 +182,6 @@ const SelectAvailableHours = ({ setFormScheduleParentComponent }) => {
       let beginMinNew = Number(endMin) + 15;
       let endHourNew = Number(end.split(":")[0]);
       let endMinNew = Number(endMin) + 30;
-      console.log(currentSchedule);
 
       if (beginMinNew >= 60) {
         beginMinNew -= 60;

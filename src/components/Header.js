@@ -32,7 +32,7 @@ const Header = () => {
         </div>
         {location.pathname === "/" && (
           <div className="login-container">
-            <Link to="/">Log In</Link>
+            <Link to="/login">Log In</Link>
             <Link to="/">Sign Up</Link>
             {/* las rutas son "/login" "/singup"*/}
           </div>

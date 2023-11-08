@@ -88,6 +88,13 @@
     transform: translateY(-1.8em);
 
   }
+
+  .no-decoration-button{
+      color: var(--color-link-login-signup-btn);
+      background-color: #d6deff;
+      text-decoration: none;
+      cursor: pointer;
+  }
   
   @media screen and (min-width: 780px) {
   .meeting-final-container {

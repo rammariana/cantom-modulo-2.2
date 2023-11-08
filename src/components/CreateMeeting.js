@@ -47,111 +47,11 @@ const CreateMeeting = () => {
       },
     },
   });
-  const [disabledBtn, setDisabledBtn] = useState(true);
+  const [disabledBtn, setDisabledBtn] = useState(false);
   let [error, setError] = useState("");
   let [creando, setCreando] = useState("");
 
-  const hours = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
-
-  //ME TRAJE ESTO -------------------------------
-  /*const horas = [
-    "00:00",
-    "00:15",
-    "00:30",
-    "00:45",
-    "01:00",
-    "01:15",
-    "01:30",
-    "01:45",
-    "02:00",
-    "02:15",
-    "02:30",
-    "02:45",
-    "03:00",
-    "03:15",
-    "03:30",
-    "03:45",
-    "04:00",
-    "04:15",
-    "04:30",
-    "04:45",
-    "05:00",
-    "05:15",
-    "05:30",
-    "05:45",
-    "06:00",
-    "06:15",
-    "06:30",
-    "06:45",
-    "07:00",
-    "07:15",
-    "07:30",
-    "07:45",
-    "08:00",
-    "08:15",
-    "08:30",
-    "08:45",
-    "09:00",
-    "09:15",
-    "09:30",
-    "09:45",
-    "10:00",
-    "10:15",
-    "10:30",
-    "10:45",
-    "11:00",
-    "11:15",
-    "11:30",
-    "11:45",
-    "12:00",
-    "12:15",
-    "12:30",
-    "12:45",
-    "13:00",
-    "13:15",
-    "13:30",
-    "13:45",
-    "14:00",
-    "14:15",
-    "14:30",
-    "14:45",
-    "15:00",
-    "15:15",
-    "15:30",
-    "15:45",
-    "16:00",
-    "16:15",
-    "16:30",
-    "16:45",
-    "17:00",
-    "17:15",
-    "17:30",
-    "17:45",
-    "18:00",
-    "18:15",
-    "18:30",
-    "18:45",
-    "19:00",
-    "19:15",
-    "19:30",
-    "19:45",
-    "20:00",
-    "20:15",
-    "20:30",
-    "20:45",
-    "21:00",
-    "21:15",
-    "21:30",
-    "21:45",
-    "22:00",
-    "22:15",
-    "22:30",
-    "22:45",
-    "23:00",
-    "23:15",
-    "23:30",
-    "23:45",
-  ];*/
+  const hours = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 120, 180];
 
   //cada vez que form cambia, el Form Global se actualiza
   useEffect(() => {
@@ -172,25 +72,53 @@ const CreateMeeting = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
-    if (Number(form.cantidad) > 0 && form.evento !== "" && form.nombre !== "") {
-      console.log(form);
-      setDisabledBtn(false);
-    }
-    //console.log(form);
   };
 
   //esta funcion actualiza el horario segun los cambios del componente SelectAvailableHours
   const setFormSchedule = (schedule) => {
-    //console.log(form);
     setForm({ ...form, horarios: schedule });
   };
+
+  //funcion que checa que los dias seleccionados no esten vacios
+  function validateForm(formObject) {
+    let errorMessage = '';
+    let hasAtLeastOneItem = false;
+
+    if(form.duracion == "" || form.nombre == "" || form.evento == "" || form.cantidad == ""){
+      errorMessage = 'Necesitas completar todos los campos'
+      setError(errorMessage);
+      return hasAtLeastOneItem;
+    }
+  
+    for (const day in formObject.horarios) {
+
+        const dayInfo = formObject.horarios[day];
+  
+        if (dayInfo.isChecked && dayInfo.schedule.length === 0) {
+          errorMessage = 'Agrega horarios a todos los días seleccionados'; 
+          setError(errorMessage);
+          console.log("hey")
+          return hasAtLeastOneItem = false;
+        }
+  
+        if (dayInfo.schedule.length > 0) {
+          hasAtLeastOneItem = true;
+        }
+      }
+      if(hasAtLeastOneItem == false){
+        errorMessage = 'Ingresa al menos un horario disponible';
+        setError(errorMessage);
+        return hasAtLeastOneItem; 
+      }
+      return hasAtLeastOneItem;
+  }
 
   const handleSubmit = async (e, form) => {
     e.preventDefault();
     setCreando("Creando...");
     setDisabledBtn(true);
 
-    if (form.duracion !== "" && form.nombre !== "" && form.cantidad !== "") {
+    if (validateForm(form)) {
       //convertir horarios a formato 'L-600-720'
       function getMinutesFromTime(time) {
         const [hours, minutes] = time.split(":");
@@ -242,22 +170,17 @@ const CreateMeeting = () => {
         console.log(err);
         setCreando("");
         setDisabledBtn(false);
-        setError("Ocurrió un error");
+        setError("Ocurrió un error, intente más tarde");
         setTimeout(() => {
           setError("");
         }, 1500);
       }
     } else {
-      setError("Necesitas completar todos los campos");
-      setCreando("");
-      setTimeout(() => {
-        disabledBtn(false);
-
-        setError("");
-      }, 2000);
-      //console.log(setError);
+      setCreando("")
+      setDisabledBtn(false)
     }
   };
+
 
   return (
     <div className="createmeeting-container">
@@ -336,7 +259,9 @@ const CreateMeeting = () => {
         {/*Aqui acaba la seccion calendario*/}
         <div className="error-success-container">
           <span className="creando">{creando}</span>
-          <span className="error">{error}</span>
+          <span className="error"
+          style={{color:'red'}}
+          >{error}</span>
         </div>
         <button onClick={(e) => handleSubmit(e, form)} disabled={disabledBtn}>
           Crear
