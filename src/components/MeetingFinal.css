@@ -1,17 +1,17 @@
 :root {
-  --color-primario: #E3DFFD;
-  --color-h1-input-text-btn: #ECF2FF;
-  --color-fondo-home: #BEADFA;
+  --color-primario: #e3dffd;
+  --color-h1-input-text-btn: #ecf2ff;
+  --color-fondo-home: #beadfa;
   --color-text-color-input: #002147;
   --color-negro-texto-inicio-border-select: #000000;
-  --color-link-login-signup-btn: #869CFF;
+  --color-link-login-signup-btn: #869cff;
   --color-blur-input: rgb(152, 186, 249);
-  --color-placeholder: #908F8F;
-  --color-span: #9874FF;
+  --color-placeholder: #908f8f;
+  --color-span: #9874ff;
   --color-icono: #222222;
-  --color-gradient-2: #DDD1FF;
-  --color-gradient-3: #BAA2FFA6;
-  --color-gradient-4: #BAA2FF;
+  --color-gradient-2: #ddd1ff;
+  --color-gradient-3: #baa2ffa6;
+  --color-gradient-4: #baa2ff;
 }
 .data-container {
   width: 100%;
@@ -84,7 +84,7 @@
 .dos {
   background-color: var(--color-gradient-2);
 }
-.tres{
+.tres {
   background-color: var(--color-gradient-3);
 }
 .cuatro {
@@ -124,7 +124,7 @@
 }
 .users-list {
   width: 100%;
-  padding: .6rem;
+  padding: 0.6rem;
   display: flex;
   flex-direction: column;
   background-color: var(--color-h1-input-text-btn);
@@ -144,50 +144,50 @@
 }
 /* Define a CSS class for your styled table */
 .styled-table {
-    width: 80vw;
-    margin-right: 4vw;
-    margin-top: 3rem;
-    max-width: 500px;
-    border-collapse: collapse;
-    font-size: 16px;
-  }
-  
-  .styled-table td {
-    font-size: 0.6rem;
-    border: 2px solid var(--color-icono);
-    padding: 8px;
-    text-align: center;
-  }
-  
-  /* Style the header row differently */
-  .styled-table thead tr {
-    color: var(--color-h1-input-text-btn);
-    font-weight: bold;
-  }
-.styled-table th, .styled-table td {
+  width: 80vw;
+  margin-right: 4vw;
+  margin-top: 3rem;
+  max-width: 500px;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.styled-table td {
+  font-size: 0.6rem;
+  border: 2px solid var(--color-icono);
+  padding: 8px;
+  text-align: center;
+}
+
+/* Style the header row differently */
+.styled-table thead tr {
+  color: var(--color-h1-input-text-btn);
+  font-weight: bold;
+}
+.styled-table th,
+.styled-table td {
   color: var(--color-negro-texto-inicio-border-select);
 }
 
-  .styled-table .empty-cell{
-    width: .6rem;
-    background-color: transparent;
-    border: 0px solid white;
-    transform: translateY(-1.8em);
+.styled-table .empty-cell {
+  width: 0.6rem;
+  background-color: transparent;
+  border: 0px solid white;
+  transform: translateY(-1.8em);
+}
+.no-decoration-button {
+  width: 100%;
+  background-color: transparent;
+  border: 2px solid var(--color-link-login-signup-btn);
+  color: var(--color-link-login-signup-btn);
+}
 
-  }
-  .no-decoration-button{
-    width: 100%;
-    background-color: transparent;
-    border: 2px solid var(--color-link-login-signup-btn);
-    color: var(--color-link-login-signup-btn);
-  }
-  
-  @media screen and (min-width: 780px) {
+@media screen and (min-width: 780px) {
   .meeting-final-container {
     padding: 10rem;
   }
-  .meeting-final-container a, .copy-container .no-decoration-button {
+  .meeting-final-container a,
+  .copy-container {
     max-width: 50%;
   }
-  
 }
