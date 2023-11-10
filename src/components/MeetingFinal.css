@@ -188,4 +188,7 @@
   .meeting-final-container a {
     max-width: 50%;
   }
+  .copy-container {
+    max-width: 50%;
+  }
 }
