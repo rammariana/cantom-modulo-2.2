@@ -19,21 +19,49 @@ nav a {
   width: 100%;
   position: absolute;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   padding-left: 2rem;
   padding-right: 2rem;
   padding-top: 0.5rem;
   background-color: transparent;
+  gap: 0.5rem;
 }
 .logo {
-  width: 100%;
   font-size: 2rem;
   font-weight: bold;
+}
+.logo img {
+  width: 80%;
 }
 .login-container {
   width: 100%;
   display: flex;
   justify-content:flex-end;
   gap: 1rem;
+}
+.nav-links .newMeetingBtn {
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+.nav-links .no-decoration-button {
+  width: 4.5rem;
+  height: 2.2rem;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: .3rem;
+}
+.no-decoration-button small {
+  font-size: .6rem;
+  color: var(--color-link-login-signup-btn);
+  line-height: 0.5;
+}
+img svg {
+  color: var(--color-link-login-signup-btn);
 }

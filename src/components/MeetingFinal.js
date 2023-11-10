@@ -5,12 +5,14 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import "./MeetingFinal.css";
 import { UserDataContext } from "./UserDataContext";
+import CopyIcon from "../assets/copy-icon.svg";
 
 const WeekTable = () => {
   const [slots, setSlots] = useState(weekLapsesGlobalArray);
   const [form, setForm] = useState({});
   const { setToken, token } = useContext(UserDataContext);
   const [usersInMeeting, setUsersInMeeting] = useState([]);
+  const [copied, setCopied] = useState(false);
 
   const params = useParams();
   setToken(params.meetingId.replace(/:/, ""));
@@ -32,12 +34,27 @@ const WeekTable = () => {
         setUsersInMeeting(userNames);
         setForm(res.data);
         setSlots(res.data.weeklyTable);
+        console.log(form);
       } catch (err) {
         console.log(err);
       }
     }
     fechData();
   }, [token]);
+  // copiar enlace
+
+  const handleCopyLink = () => {
+    const linkToCopy = `whentomeetup.com/meeting-final/${token}`;
+    try {
+      navigator.clipboard.writeText(linkToCopy);
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+    } catch (error) {
+      alert("No se pudo copiar el enlace: ", error);
+    }
+  };
 
   // Determine the color based on the count
   const getColor = (usersAvailable) => {
@@ -55,26 +72,53 @@ const WeekTable = () => {
   return (
     <div className="meeting-final-container">
       <h1>{form.eventName || "Evento " + form.meetingId}</h1>
-      <p>Encuentra cuando pueden asistir todos los invitados a tu evento</p>
+      {/*<p>Encuentra cuando pueden asistir todos los invitados a tu evento</p>*/}
+      <section className="data-container">
+        <p>
+          El administrador del evento es <b>{form.adminName}</b>
+        </p>
+        <p>
+          Duración del evento: <b>{form.lengthMeeting} minutos</b>
+        </p>
+      </section>
+      <Link to="/join-meeting">
+        <button>Unirme al evento</button>
+      </Link>
+      <div className="copy-container">
+        {copied && <span className="copied">copiado!</span>}
+        <button className="no-decoration-button" onClick={handleCopyLink}>
+          {" "}
+          <span>
+            <img src={CopyIcon} alt="" />
+          </span>
+          Copiar enlace a evento
+        </button>
+      </div>
 
+      {/*<Link to="/create-meeting">
+        <button className="no-decoration-button">Crear nuevo evento</button>
+  </Link>*/}
       <section className="users-list">
-        <br/>
+        <br />
         <h5>Usuarios en el evento</h5>
-        <br/>
+        <br />
         <div className="list">
           {usersInMeeting.map((e, index) => (
             <p key={index}>{e[0].toUpperCase().concat(e.slice(1))}</p>
           ))}
         </div>
       </section>
-
-      <Link to="/join-meeting">
-        <button>Unirme al evento</button>
-      </Link>
-      <Link to="/create-meeting">
-        <button className="no-decoration-button">Crear nuevo evento</button>
-      </Link>
-
+      <div className="gradient-container">
+        <small>Ninguno disponible</small>
+        <div className="gradient">
+          <span class="gradient-fragment uno"></span>
+          <span class="gradient-fragment dos"></span>
+          <span class="gradient-fragment tres"></span>
+          <span class="gradient-fragment cuatro"></span>
+          <span class="gradient-fragment cinco"></span>
+        </div>
+        <small>Todos disponibles</small>
+      </div>
       <table className="styled-table">
         <thead>
           <tr style={{ fontSize: "3vw" }}>

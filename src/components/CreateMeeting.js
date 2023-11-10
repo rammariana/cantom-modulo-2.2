@@ -214,7 +214,7 @@ const CreateMeeting = () => {
         />
         <div className="label-container">
           <span className="createMeeting-span">3</span>
-          <label>Selecciona el limite del evento y su duración</label>
+          <label>Selecciona el límite del evento y su duración</label>
         </div>
         <div className="duration">
           <div className="duration-days">
@@ -259,9 +259,9 @@ const CreateMeeting = () => {
         {/*Aqui acaba la seccion calendario*/}
         <div className="error-success-container">
           <span className="creando">{creando}</span>
-          <span className="error"
-          style={{color:'red'}}
-          >{error}</span>
+          <span className="error" style={{ color: "red" }}>
+            {error}
+          </span>
         </div>
         <button onClick={(e) => handleSubmit(e, form)} disabled={disabledBtn}>
           Crear

@@ -91,7 +91,7 @@ const MeetingId = () => {
         </Link>
         {/*Aqui debe ir una redirección al meetingFinal*/}
         <Link to={`/create-meeting`}>
-          <button className="btn-excentrico">Crear nuevo evento</button>
+          <button className="no-decoration-button">Crear nuevo evento</button>
         </Link>
         {/*Aqui va una redirección al createMeeting*/}
       </section>

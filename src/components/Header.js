@@ -13,6 +13,7 @@ import UserInMeeting from "./UserInMeeting";
 import MeetingFinal from "./MeetingFinal";
 import MeetEase from "../assets/MeetEase.png";
 import MeetEaseHome from "../assets/MeetEaseHome.png";
+import AddBlueIcon from "../assets/add-blue-icon.svg";
 
 const Header = () => {
   const location = useLocation();
@@ -32,10 +33,18 @@ const Header = () => {
         </div>
         {location.pathname === "/" && (
           <div className="login-container">
-            <Link to="/login">Log In</Link>
+            <Link to="/">Log In</Link>
             <Link to="/">Sign Up</Link>
             {/* las rutas son "/login" "/singup"*/}
           </div>
+        )}
+        {location.pathname.startsWith("/meeting-final/") && (
+          <Link to={`/create-meeting`} className="newMeeting-btn">
+            <button className="no-decoration-button">
+              <img src={AddBlueIcon} alt="" />
+              <small>Nuevo evento</small>
+            </button>
+          </Link>
         )}
       </nav>
       <Routes>

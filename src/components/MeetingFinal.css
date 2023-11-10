@@ -9,7 +9,90 @@
   --color-placeholder: #908F8F;
   --color-span: #9874FF;
   --color-icono: #222222;
+  --color-gradient-2: #DDD1FF;
+  --color-gradient-3: #BAA2FFA6;
+  --color-gradient-4: #BAA2FF;
 }
+.data-container {
+  width: 100%;
+}
+.data-container b {
+  color: var(--color-link-login-signup-btn);
+}
+.copy-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.copy-container button {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
+  padding: 0.5rem 0.8rem;
+  color: var(--color-link-login-signup-btn);
+  font-weight: 500;
+  background-color: transparent;
+  border: 0.2rem solid var(--color-link-login-signup-btn);
+  white-space: nowrap;
+  gap: 0.5rem;
+}
+.copy-container .no-decoration-button ion-icon {
+  color: var(--color-link-login-signup-btn);
+  font-size: 1.3rem;
+  margin-right: 0.2rem;
+}
+.copy-container span {
+  color: rgb(79, 218, 79);
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 6px rgba(100, 93, 93, 0.59);
+  transition: desplazar 1s ease-in-out;
+}
+.gradient-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.2rem;
+}
+.gradient-container small {
+  font-size: 0.7rem;
+}
+.gradient {
+  border: thin solid black;
+  width: 100%;
+  height: 1.5rem;
+  display: flex;
+  flex-direction: row;
+}
+.gradient-fragment {
+  border: thin solid black;
+  width: 100%;
+}
+
+/* Colores del gradiente */
+.uno {
+  background-color: var(--color-h1-input-text-btn);
+}
+.dos {
+  background-color: var(--color-gradient-2);
+}
+.tres{
+  background-color: var(--color-gradient-3);
+}
+.cuatro {
+  background-color: var(--color-gradient-4);
+}
+.cinco {
+  background-color: var(--color-link-login-signup-btn);
+}
+/* Colores del gradiente */
+
 .meeting-final-container {
   min-height: 100vh;
   text-align: center;
@@ -27,6 +110,8 @@
 }
 .meeting-final-container a button {
   margin-top: 1rem;
+  width: 100%;
+  font-weight: 500;
 }
 .meeting-final-container h1 {
   color: var(--color-negro-texto-inicio-border-select);
@@ -36,7 +121,7 @@
   font-size: 1.1rem;
 }
 .users-list {
-  width: 85%;
+  width: 100%;
   padding: .6rem;
   display: flex;
   flex-direction: column;
@@ -88,8 +173,9 @@
     transform: translateY(-1.8em);
 
   }
-
   .no-decoration-button{
+    width: 100%;
+    margin-top: 1rem;
     background-color: transparent;
     border: 2px solid var(--color-link-login-signup-btn);
     color: var(--color-link-login-signup-btn);
