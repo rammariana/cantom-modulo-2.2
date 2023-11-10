@@ -8,18 +8,6 @@
   --color-placeholder: #908F8F;
   --color-span: #9874FF;
   -color-icono: #222222;
-    /*#869CFF; btn y no tengo cuenta btn crear ebento meetingid -
-    background: #BEADFA; colr fondo home;
-  background: #E3DFFD; tokencontainer login register crear evento -
-  background: #ECF2FF; input h1 de home 
-  background: #002147; text color y h1 color texto de input
-background: #000000; texto inicio "encuentra horario..." login h1 registre borde de selects
-background: #908F8F; placeholder
-background: #9874FF; span
-background: #222222; icono basura y mas
-
-
-*/
 }
 .home-container {
   min-height: 100vh;

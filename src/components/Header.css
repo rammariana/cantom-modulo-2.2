@@ -23,7 +23,7 @@ nav a {
   justify-content: space-between;
   padding-left: 2rem;
   padding-right: 2rem;
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   background-color: transparent;
   gap: 0.5rem;
 }
@@ -64,4 +64,11 @@ nav a {
 }
 img svg {
   color: var(--color-link-login-signup-btn);
+}
+@media screen and (min-width: 780px) {
+  .nav-links {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  
 }
